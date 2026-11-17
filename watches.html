@@ -100,6 +100,7 @@
         .watch-specs span { padding: 5px 7px; border: 1px solid var(--line); color: #c8c8bc; font-size: 7px; letter-spacing: .12em; text-transform: uppercase; }
         .catalog-price-note { margin: 0 0 22px; padding: 13px 16px; border-left: 2px solid var(--brass); background: #202722; color: var(--muted); font-size: 10px; line-height: 1.7; }
         .catalog-price-note a { color: var(--brass-bright); }
+        .catalogue-load-status { margin: 0 0 16px; color: var(--muted); font-size: 10px; }
         .demo-assistant { margin: 0 0 24px; padding: clamp(18px, 3vw, 28px); border: 1px solid var(--line); background: linear-gradient(120deg, #202722, #171d19); }
         .demo-assistant-heading { display: flex; align-items: start; justify-content: space-between; gap: 16px; }
         .demo-assistant h3 { margin: 0; font-family: var(--serif); font-size: clamp(23px, 3vw, 30px); font-weight: 400; }
@@ -257,6 +258,7 @@
                 <a href="equinox.html">Fragrance</a>
                 <a href="equinox-family.html">Equinox Family</a>
                 <a href="#craft">Our perspective</a>
+                <a href="admin.html">Owner sign in</a>
                 <a href="#contact">Visit us</a>
             </div>
             <div class="header-actions">
@@ -441,6 +443,7 @@
                 <p class="demo-assistant-disclaimer">Demo only: recommendations use simple keyword and catalogue matching in your browser. This is not a generative AI service; no API, account, billing, or personal-data sharing is involved.</p>
                 <div class="demo-assistant-results" id="demo-assistant-results" role="status" aria-live="polite" aria-relevant="additions"></div>
             </section>
+            <p class="catalogue-load-status" id="catalogue-load-status" role="status" aria-live="polite"></p>
         </section>
 
         <section class="craft" id="craft">
@@ -459,21 +462,22 @@
             </div>
         </section>
     </main>
-    <footer class="footer"><div class="footer-inner shell"><a class="brand" href="equinox.html"><span class="brand-name">Gio<span>Equinox</span></span></a><span>© <span id="current-year"></span> GioEquinox · Timepieces</span><a href="equinox.html">Discover fragrances ↗</a><a href="https://github.com/amanigiovanni1-design/GioEquinox/graphs/traffic" target="_blank" rel="noopener noreferrer">Owner analytics ↗</a></div></footer>
+    <footer class="footer"><div class="footer-inner shell"><a class="brand" href="equinox.html"><span class="brand-name">Gio<span>Equinox</span></span></a><span>© <span id="current-year"></span> GioEquinox · Timepieces</span><a href="equinox.html">Discover fragrances ↗</a><a href="admin.html">Owner sign in ↗</a><a href="https://github.com/amanigiovanni1-design/GioEquinox/graphs/traffic" target="_blank" rel="noopener noreferrer">Owner analytics ↗</a></div></footer>
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
     <dialog class="cart-dialog" id="cart-dialog" aria-labelledby="cart-title">
         <div class="cart-header"><div><h2 id="cart-title">Your cart</h2><p id="cart-item-summary">Your selected timepieces</p></div><button class="cart-close" id="cart-close" type="button" aria-label="Close cart">×</button></div>
         <div class="cart-items" id="cart-items"></div>
-        <div class="cart-footer"><p class="cart-footer-note">Displayed amounts are online retailer references, not confirmed GioEquinox prices. Shipping, tax and import duties are excluded; ask us to confirm the current local price and availability.</p><a class="button cart-checkout" id="cart-enquiry" aria-disabled="true" tabindex="-1">Enquire about your selection on WhatsApp</a></div>
+        <div class="cart-footer"><p class="cart-footer-note" id="cart-footer-note">Displayed amounts are online retailer references, not confirmed GioEquinox prices. Shipping, tax and import duties are excluded; ask us to confirm the current local price and availability.</p><a class="button cart-checkout" id="cart-enquiry" aria-disabled="true" tabindex="-1">Enquire about your selection on WhatsApp</a></div>
     </dialog>
     <script>
         (() => {
-            const products = [...document.querySelectorAll('.watch-card')];
+            const products = () => [...document.querySelectorAll('.watch-card')];
             const cartKey = 'gioequinox-unified-cart';
+            const cartFooterNote = document.getElementById('cart-footer-note');
             const legacyCartKey = 'gioequinox-watch-cart';
             const cartCategory = 'watch';
             const reactionKey = 'gioequinox-watch-reactions';
-            const productPrices = new Map(products.map(product => [`${cartCategory}:${product.dataset.product}`, Number(product.dataset.price)]));
+            const productPrices = new Map(products().map(product => [`${cartCategory}:${product.dataset.product}`, Number(product.dataset.price)]));
             let cart = {};
             let reactions = {};
             let toastTimer;
@@ -498,9 +502,10 @@
                                 name: item.name,
                                 category: item.category,
                                 quantity: Math.min(item.quantity, 99),
-                                price: Number.isSafeInteger(item.price) && item.price >= 0
+                                price: Number.isFinite(item.price) && item.price >= 0
                                     ? item.price
-                                    : productPrices.get(id) ?? null
+                                    : productPrices.get(id) ?? null,
+                                priceKind: item.priceKind === 'catalogue' ? 'catalogue' : 'reference'
                             };
                         }
                     });
@@ -539,7 +544,8 @@
                                 name,
                                 category: cartCategory,
                                 quantity: Math.min(item.quantity, 99),
-                                price: productPrices.get(id) ?? null
+                                price: productPrices.get(id) ?? null,
+                                priceKind: 'reference'
                             };
                         }
                     });
@@ -557,18 +563,26 @@
                 const items = document.getElementById('cart-items');
                 const enquiry = document.getElementById('cart-enquiry');
                 if (!entries.length) {
+                    cartFooterNote.textContent = 'Retailer reference prices are not confirmed GioEquinox prices. Shipping, tax and import duties are excluded; ask us to confirm current local prices and availability.';
                     items.innerHTML = '<div class="cart-empty">Your cart is waiting for your first selection.<br><br><a class="button" href="#collection" data-close-cart>Explore timepieces</a><br><br><a href="equinox.html">Browse fragrances ↗</a></div>';
                     enquiry.removeAttribute('href');
                     enquiry.setAttribute('aria-disabled', 'true');
                     enquiry.tabIndex = -1;
                     return;
                 }
-                items.innerHTML = entries.map(([id, item]) => `<article class="cart-item"><div><h3>${escapeHtml(item.name)}</h3><p>${item.category === 'fragrance' ? 'Fragrance' : 'Timepiece'}</p><p>${item.price === null ? 'Reference price unavailable · please confirm' : `Retailer reference: K${item.price.toLocaleString('en-US')} each`}</p></div><div class="cart-item-actions" aria-label="Quantity for ${escapeHtml(item.name)}"><button class="cart-action" type="button" data-cart-action="decrease" data-product="${escapeHtml(id)}" aria-label="Decrease ${escapeHtml(item.name)} quantity">−</button><span class="cart-quantity">${item.quantity}</span><button class="cart-action" type="button" data-cart-action="increase" data-product="${escapeHtml(id)}" aria-label="Increase ${escapeHtml(item.name)} quantity">+</button></div><button class="cart-item-remove" type="button" data-cart-action="remove" data-product="${escapeHtml(id)}">Remove</button></article>`).join('');
+                items.innerHTML = entries.map(([id, item]) => `<article class="cart-item"><div><h3>${escapeHtml(item.name)}</h3><p>${item.category === 'fragrance' ? 'Fragrance' : 'Timepiece'}</p><p>${item.price === null ? 'Price unavailable · please confirm' : `${item.priceKind === 'catalogue' ? 'GioEquinox price' : 'Retailer reference'}: K${item.price.toLocaleString('en-US')} each`}</p></div><div class="cart-item-actions" aria-label="Quantity for ${escapeHtml(item.name)}"><button class="cart-action" type="button" data-cart-action="decrease" data-product="${escapeHtml(id)}" aria-label="Decrease ${escapeHtml(item.name)} quantity">−</button><span class="cart-quantity">${item.quantity}</span><button class="cart-action" type="button" data-cart-action="increase" data-product="${escapeHtml(id)}" aria-label="Increase ${escapeHtml(item.name)} quantity">+</button></div><button class="cart-item-remove" type="button" data-cart-action="remove" data-product="${escapeHtml(id)}">Remove</button></article>`).join('');
                 const order = entries.map(([, item]) => {
-                    const reference = item.price === null ? 'price to confirm' : `reference K${item.price.toLocaleString('en-US')} each`;
+                    const reference = item.price === null ? 'price to confirm' : `${item.priceKind === 'catalogue' ? 'GioEquinox price' : 'retailer reference'} K${item.price.toLocaleString('en-US')} each`;
                     return `- ${item.category === 'fragrance' ? 'Fragrance' : 'Timepiece'}: ${item.name} x ${item.quantity} (${reference})`;
                 }).join('\n');
-                const message = encodeURIComponent(`Hello GioEquinox,\n\nI would like to enquire about:\n${order}\n\nThe listed amounts are online retailer references, not confirmed GioEquinox prices; shipping, taxes and import duties are excluded. Please confirm current local prices, availability and exact models.\n\nThank you.`);
+                const hasReferencePrice = entries.some(([, item]) => item.priceKind !== 'catalogue');
+                cartFooterNote.textContent = hasReferencePrice
+                    ? 'Retailer reference prices are not confirmed GioEquinox prices. Shipping, tax and import duties are excluded; ask us to confirm current local prices and availability.'
+                    : 'These are GioEquinox catalogue prices in ZMW. Please confirm current availability and product details.';
+                const priceNote = hasReferencePrice
+                    ? '\n\nRetailer references are not confirmed GioEquinox prices; shipping, taxes and import duties are excluded. Please confirm reference prices, current availability and exact models.'
+                    : '\n\nPlease confirm current availability and product details.';
+                const message = encodeURIComponent(`Hello GioEquinox,\n\nI would like to enquire about:\n${order}${priceNote}\n\nThank you.`);
                 enquiry.href = `https://wa.me/260777907071?text=${message}`;
                 enquiry.target = '_blank';
                 enquiry.rel = 'noopener noreferrer';
@@ -583,7 +597,14 @@
                     const id = `${cartCategory}:${name}`;
                     const quantity = cart[id]?.quantity || 0;
                     if (quantity >= 99) { showMessage(`You can add up to 99 of ${name}.`); return; }
-                    cart[id] = { name, category: cartCategory, quantity: quantity + 1, price: Number(add.closest('.watch-card').dataset.price) };
+                    const card = add.closest('.watch-card');
+                    cart[id] = {
+                        name,
+                        category: cartCategory,
+                        quantity: quantity + 1,
+                        price: Number(card.dataset.price),
+                        priceKind: card.dataset.priceType === 'catalogue' ? 'catalogue' : 'reference'
+                    };
                     saveCart();
                     drawCart();
                     showMessage(`${name} added to your cart.`);
@@ -599,7 +620,7 @@
                 }
             });
             const syncReactions = () => {
-                products.forEach(product => product.querySelectorAll('[data-reaction]').forEach(button => {
+                products().forEach(product => product.querySelectorAll('[data-reaction]').forEach(button => {
                     const active = reactions[product.dataset.product] === button.dataset.reaction;
                     button.setAttribute('aria-pressed', String(active));
                     if (button.dataset.reaction === 'like') button.textContent = active ? '♥' : '♡';
@@ -640,7 +661,7 @@
                 const filter = button.dataset.filter;
                 document.querySelectorAll('.filter-button').forEach(option => option.setAttribute('aria-pressed', String(option === button)));
                 let count = 0;
-                products.forEach(product => {
+                products().forEach(product => {
                     const visible = filter === 'all' || product.dataset.category.split(' ').includes(filter);
                     product.hidden = !visible;
                     if (visible) count++;
@@ -667,6 +688,9 @@
             drawCart();
         })();
     </script>
+    <script src="assets/catalogue-config.js"></script>
+    <script src="assets/catalogue-api.js"></script>
+    <script src="assets/catalogue-products.js"></script>
     <script src="assets/demo-assistant.js" defer></script>
 </body>
 </html>

@@ -5,7 +5,7 @@
     const grid = document.getElementById('product-grid');
     if (!form || !input || !results || !grid) return;
 
-    const products = [...grid.querySelectorAll('[data-product]')].map(card => {
+    const getProducts = () => [...grid.querySelectorAll('[data-product]')].map(card => {
         const description = card.querySelector('.product-notes, .watch-description')?.textContent.trim() || '';
         const price = Number(card.dataset.price);
         const searchText = `${card.dataset.product} ${card.dataset.category} ${description}`.toLowerCase();
@@ -14,7 +14,7 @@
             name: card.dataset.product,
             description,
             categories: card.dataset.category.split(/\s+/),
-            price: Number.isSafeInteger(price) && price >= 0 ? price : null,
+            price: Number.isFinite(price) && price >= 0 ? price : null,
             searchText
         };
     });
@@ -34,6 +34,7 @@
     };
 
     const recommend = query => {
+        const products = getProducts();
         const normalized = query.toLowerCase();
         const terms = normalized.match(/[a-z0-9]+/g) || [];
         const ignoredTerms = new Set([
@@ -44,15 +45,10 @@
             'show', 'give', 'nice', 'good', 'best', 'perfume', 'perfumes', 'fragrance',
             'fragrances', 'scent', 'scents', 'watch', 'watches'
         ]);
-        const searchTerms = terms.filter(term => !ignoredTerms.has(term) && !/^(?:k|kwacha)?\d[\d,]*$/.test(term));
-        const mentionedBrands = ['poedagar', 'skmei', 'rolex', 'casio', 'chanel', 'versace', 'marc', 'jacobs', 'calvin', 'klein']
-            .filter(brand => terms.includes(brand));
+        const searchTerms = terms.filter(term => !ignoredTerms.has(term) && !/^\d+$/.test(term));
         const budget = findBudget(normalized);
         const ranked = products
-            .filter(product =>
-                (budget === null || product.price === null || product.price <= budget) &&
-                (!mentionedBrands.length || mentionedBrands.every(brand => product.searchText.includes(brand)))
-            )
+            .filter(product => budget === null || product.price === null || product.price <= budget)
             .map(product => {
                 let score = 0;
                 for (const term of searchTerms) {
@@ -86,7 +82,7 @@
                 <div>
                     <h4>${escapeHtml(product.name)}</h4>
                     <p>${escapeHtml(product.description)}</p>
-                    <p>${product.price === null ? 'Price to confirm' : `Retailer reference: K${product.price.toLocaleString('en-US')} · confirm local price`}</p>
+                    <p>${product.price === null ? 'Price to confirm' : `${product.card.dataset.priceType === 'catalogue' ? 'GioEquinox price' : 'Retailer reference'}: K${product.price.toLocaleString('en-US')}${product.card.dataset.priceType === 'catalogue' ? '' : ' · confirm local price'}`}</p>
                 </div>
                 <div class="demo-assistant-result-actions">
                     <a href="#${escapeHtml(product.card.id || 'collection')}" data-assistant-view="${escapeHtml(product.name)}">View item</a>
@@ -112,6 +108,7 @@
         const viewLink = event.target.closest('[data-assistant-view]');
         if (viewLink) {
             event.preventDefault();
+            const products = getProducts();
             const product = products.find(item => item.name === viewLink.dataset.assistantView);
             if (product) {
                 document.querySelectorAll('.filter-button').forEach(button => {
@@ -125,7 +122,7 @@
 
         const addButton = event.target.closest('[data-assistant-add]');
         if (!addButton) return;
-        const product = products.find(item => item.name === addButton.dataset.assistantAdd);
+        const product = getProducts().find(item => item.name === addButton.dataset.assistantAdd);
         const cartButton = product?.card.querySelector('[data-add-to-cart]');
         if (cartButton) cartButton.click();
     });

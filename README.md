@@ -24,6 +24,36 @@ The site is published with GitHub Pages from the `main` branch root.
 
 The shared cart is saved in the visitor's browser and is not an online database. Existing perfume and watch cart selections are migrated into it when the catalogues are next opened in that browser.
 
+## Owner catalogue management
+
+The owner dashboard at `admin.html` lets an authorized owner sign in and add a fragrance or timepiece with a name, ZMW price, description, category tags, and photo. New products appear on the corresponding public catalogue. The backend uses Supabase Auth, Postgres row-level security, and a public-read image bucket with admin-only uploads. The browser configuration contains only the Supabase project URL and public anon/publishable key; never put a service-role or secret key in this site.
+
+To enable the dashboard:
+
+1. Create a Supabase project and copy its project URL and public anon/publishable key into `assets/catalogue-config.js` as `url` and `anonKey`.
+2. In the Supabase SQL Editor, run the complete `supabase/catalogue-schema.sql` script.
+3. In Supabase Authentication, create the owner's email/password account. Then run the following in the SQL Editor, replacing the email with the exact owner account email:
+
+   ```sql
+   insert into public.catalogue_admins (user_id)
+   select id
+   from auth.users
+   where lower(email) = lower('owner@example.com')
+   on conflict (user_id) do nothing;
+   ```
+
+   Confirm that the owner was added:
+
+   ```sql
+   select a.user_id, u.email
+   from public.catalogue_admins as a
+   join auth.users as u on u.id = a.user_id;
+   ```
+
+4. Publish the configured site. Sign in at `admin.html` using that owner account. Do not share the password or add it to the repository.
+
+The owner allowlist is managed only in the Supabase SQL Editor; signing in alone does not grant publishing access. Uploaded photos must be JPEG, PNG, or WebP and no larger than 5 MB. Supabase project configuration and schema deployment are separate from publishing the static site.
+
 ## Catalogue recommendation demo
 
 The perfume and watch catalogues have a small product-matching demo that ranks the published catalogue using typed keywords and an optional K budget. A visitor can open a match or add it to the shared cart. It runs locally in the browser, makes no API requests, uses no provider key, and does not send visitors' messages or other data anywhere. It is a rule-based demo, not a generative AI model.

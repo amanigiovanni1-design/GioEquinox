@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#17201a">
+    <title>Owner catalogue · GioEquinox</title>
+    <style>
+        :root { color-scheme: dark; --bg: #17201a; --panel: #202a23; --line: #3b473d; --text: #f3efe4; --muted: #b7b9ac; --accent: #c9a56a; --error: #f19b8b; --success: #a9d5a5; }
+        * { box-sizing: border-box; }
+        body { margin: 0; min-height: 100vh; background: var(--bg); color: var(--text); font: 15px/1.6 Georgia, "Times New Roman", serif; }
+        a { color: var(--accent); }
+        .shell { width: min(100% - 36px, 920px); margin: 0 auto; }
+        header { padding: 22px 0; border-bottom: 1px solid var(--line); }
+        .header-inner { display: flex; justify-content: space-between; align-items: center; gap: 20px; }
+        .brand { color: var(--text); font-size: 19px; letter-spacing: .08em; text-decoration: none; }
+        .brand span { color: var(--accent); }
+        nav { display: flex; gap: 18px; font: 12px/1.4 Arial, sans-serif; }
+        main { padding: 48px 0 72px; }
+        .eyebrow { color: var(--accent); font: 11px/1.4 Arial, sans-serif; letter-spacing: .17em; text-transform: uppercase; }
+        h1, h2, h3 { font-weight: 400; line-height: 1.2; }
+        h1 { max-width: 700px; margin: 10px 0 14px; font-size: clamp(36px, 7vw, 58px); }
+        h2 { margin: 0 0 18px; font-size: 27px; }
+        .intro, .help { color: var(--muted); }
+        .panel { margin-top: 30px; padding: clamp(20px, 5vw, 34px); border: 1px solid var(--line); background: var(--panel); }
+        form { display: grid; gap: 16px; }
+        .form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+        label { display: grid; gap: 7px; color: var(--muted); font: 12px/1.4 Arial, sans-serif; }
+        input, select, textarea { width: 100%; padding: 12px; border: 1px solid var(--line); border-radius: 2px; background: #17201a; color: var(--text); font: 15px/1.5 Arial, sans-serif; }
+        textarea { min-height: 120px; resize: vertical; }
+        input:focus-visible, select:focus-visible, textarea:focus-visible, button:focus-visible, a:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+        input[type="file"] { padding: 9px; font-size: 13px; }
+        button { justify-self: start; padding: 12px 20px; border: 1px solid var(--accent); background: var(--accent); color: #17201a; font: 12px/1.4 Arial, sans-serif; font-weight: 700; cursor: pointer; }
+        button:disabled { cursor: wait; opacity: .65; }
+        .secondary-button { border-color: var(--line); background: transparent; color: var(--text); }
+        .status { min-height: 24px; margin: 0; color: var(--muted); font: 13px/1.5 Arial, sans-serif; }
+        .status[data-state="error"] { color: var(--error); }
+        .status[data-state="success"] { color: var(--success); }
+        .preview { display: flex; align-items: center; gap: 14px; color: var(--muted); font: 12px/1.5 Arial, sans-serif; }
+        .preview img { width: 70px; height: 70px; object-fit: cover; border: 1px solid var(--line); }
+        .product-list { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
+        .product-row { display: grid; grid-template-columns: 64px 1fr auto; align-items: center; gap: 14px; padding: 12px; border: 1px solid var(--line); }
+        .product-row img { width: 64px; height: 64px; object-fit: cover; }
+        .product-row h3 { margin: 0; font-size: 17px; }
+        .product-row p { margin: 4px 0 0; color: var(--muted); font: 12px/1.5 Arial, sans-serif; }
+        .product-price { color: var(--accent); font: 13px/1.4 Arial, sans-serif; white-space: nowrap; }
+        [hidden] { display: none !important; }
+        @media (max-width: 640px) {
+            .header-inner { align-items: flex-start; flex-direction: column; }
+            nav { flex-wrap: wrap; }
+            .form-grid { grid-template-columns: 1fr; }
+            .product-row { grid-template-columns: 52px 1fr; }
+            .product-row img { width: 52px; height: 52px; }
+            .product-price { grid-column: 2; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="shell header-inner">
+            <a class="brand" href="index.html">Gio<span>Equinox</span></a>
+            <nav aria-label="Catalogue navigation">
+                <a href="equinox.html">Fragrances</a>
+                <a href="watches.html">Timepieces</a>
+                <a href="index.html">Store home</a>
+            </nav>
+        </div>
+    </header>
+    <main class="shell">
+        <p class="eyebrow">Owner tools</p>
+        <h1>Manage the catalogue</h1>
+        <p class="intro">Sign in with the owner account to add a fragrance or timepiece. Published products appear on the matching public catalogue.</p>
+        <p class="help">Prices are entered in Zambian kwacha (ZMW). Upload a JPEG, PNG, or WebP image up to 5 MB.</p>
+
+        <section class="panel" id="sign-in-panel" aria-labelledby="sign-in-heading">
+            <h2 id="sign-in-heading">Owner sign in</h2>
+            <form id="sign-in-form">
+                <label>Email
+                    <input id="owner-email" name="email" type="email" autocomplete="username" maxlength="254" required>
+                </label>
+                <label>Password
+                    <input id="owner-password" name="password" type="password" autocomplete="current-password" required>
+                </label>
+                <button type="submit">Sign in</button>
+                <p class="status" id="sign-in-status" role="status" aria-live="polite"></p>
+            </form>
+        </section>
+
+        <section class="panel" id="dashboard" aria-labelledby="product-heading" hidden>
+            <h2 id="product-heading">Add a catalogue product</h2>
+            <form id="product-form">
+                <div class="form-grid">
+                    <label>Product name
+                        <input name="name" type="text" maxlength="120" required>
+                    </label>
+                    <label>Catalogue
+                        <select name="productType" required>
+                            <option value="fragrance">Fragrance</option>
+                            <option value="watch">Timepiece</option>
+                        </select>
+                    </label>
+                    <label>Price (ZMW)
+                        <input name="price" type="number" min="0.01" max="9999999999.99" step="0.01" inputmode="decimal" required>
+                    </label>
+                    <label>Category tags
+                        <input name="tags" type="text" maxlength="124" placeholder="floral, amber (optional)">
+                    </label>
+                </div>
+                <label>Description
+                    <textarea name="description" maxlength="700" required></textarea>
+                </label>
+                <label>Product photo
+                    <input name="image" type="file" accept="image/jpeg,image/png,image/webp" required>
+                </label>
+                <div class="preview" id="image-preview" hidden></div>
+                <button type="submit" id="save-product">Upload and publish product</button>
+                <p class="status" id="product-status" role="status" aria-live="polite"></p>
+            </form>
+            <div class="panel" style="margin-top: 28px; padding: 20px;">
+                <h2>Recently added</h2>
+                <p class="status" id="list-status" role="status" aria-live="polite"></p>
+                <ul class="product-list" id="product-list"></ul>
+            </div>
+            <button type="button" class="secondary-button" id="sign-out">Sign out</button>
+        </section>
+    </main>
+    <script src="assets/catalogue-config.js"></script>
+    <script src="assets/catalogue-api.js"></script>
+    <script src="assets/catalogue-admin.js"></script>
+</body>
+</html>
