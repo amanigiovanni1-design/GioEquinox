@@ -15,7 +15,9 @@ The site is published with GitHub Pages from the `main` branch root.
 - Responsive landing page and perfume catalogue
 - Scent-family filters
 - Per-product like/dislike controls saved in the current browser
-- Persistent shopping carts with quantity controls and WhatsApp order enquiries
-- Separate watch collection page with its own design, filters, reactions, and cart
+- One persistent cart shared by the perfume and watch catalogues, with quantity controls and combined WhatsApp enquiries
+- Separate watch collection page with its own design, filters, and reactions
 - Equinox Family registration page with consent, phone validation, and WhatsApp handoff
 - Store address, phone, and email links
+
+The shared cart is saved in the visitor's browser and is not an online database. Existing perfume and watch cart selections are migrated into it when the catalogues are next opened in that browser.

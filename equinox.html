@@ -830,7 +830,9 @@
     <script>
         (() => {
             const storageKey = 'gioequinox-perfume-reactions';
-            const cartStorageKey = 'gioequinox-cart';
+            const cartStorageKey = 'gioequinox-unified-cart';
+            const legacyCartStorageKey = 'gioequinox-cart';
+            const cartCategory = 'fragrance';
             const cards = [...document.querySelectorAll('.product-card')];
             const productNames = new Set(cards.map(card => card.dataset.product));
             const summary = document.getElementById('reaction-summary');
@@ -851,15 +853,27 @@
                 console.warn('Saved perfume reactions could not be read.', error);
             }
 
-            try {
-                const savedCart = JSON.parse(localStorage.getItem(cartStorageKey) || '{}');
+            const parseCart = value => {
+                const savedCart = JSON.parse(value || '{}');
+                const parsedCart = {};
                 if (savedCart && typeof savedCart === 'object' && !Array.isArray(savedCart)) {
-                    Object.entries(savedCart).forEach(([name, item]) => {
-                        if (productNames.has(name) && Number.isSafeInteger(item?.quantity) && item.quantity > 0) {
-                            cart[name] = { quantity: Math.min(item.quantity, 99) };
+                    Object.values(savedCart).forEach(item => {
+                        if (['fragrance', 'watch'].includes(item?.category) &&
+                            typeof item.name === 'string' &&
+                            Number.isSafeInteger(item.quantity) && item.quantity > 0) {
+                            const id = `${item.category}:${item.name}`;
+                            parsedCart[id] = {
+                                name: item.name,
+                                category: item.category,
+                                quantity: Math.min(item.quantity, 99)
+                            };
                         }
                     });
                 }
+                return parsedCart;
+            };
+            try {
+                cart = parseCart(localStorage.getItem(cartStorageKey));
             } catch (error) {
                 console.warn('Saved shopping cart could not be read.', error);
             }
@@ -907,37 +921,60 @@
                 }
             };
 
+            try {
+                const legacyCart = JSON.parse(localStorage.getItem(legacyCartStorageKey) || 'null');
+                if (legacyCart && typeof legacyCart === 'object' && !Array.isArray(legacyCart)) {
+                    Object.entries(legacyCart).forEach(([name, item]) => {
+                        const id = `${cartCategory}:${name}`;
+                        if (productNames.has(name) && !cart[id] &&
+                            Number.isSafeInteger(item?.quantity) && item.quantity > 0) {
+                            cart[id] = {
+                                name,
+                                category: cartCategory,
+                                quantity: Math.min(item.quantity, 99)
+                            };
+                        }
+                    });
+                    if (saveCart()) localStorage.removeItem(legacyCartStorageKey);
+                }
+            } catch (error) {
+                console.warn('Saved perfume cart could not be migrated.', error);
+            }
+
             const renderCart = () => {
                 const entries = Object.entries(cart);
                 const itemCount = entries.reduce((total, [, item]) => total + item.quantity, 0);
                 cartCount.textContent = String(itemCount);
                 cartToggle.setAttribute('aria-label', `Open shopping cart, ${itemCount} ${itemCount === 1 ? 'item' : 'items'}`);
                 document.getElementById('cart-item-summary').textContent =
-                    `${entries.length} ${entries.length === 1 ? 'fragrance' : 'fragrances'} · ${itemCount} ${itemCount === 1 ? 'item' : 'items'}`;
+                    `${entries.length} ${entries.length === 1 ? 'product' : 'products'} · ${itemCount} ${itemCount === 1 ? 'item' : 'items'}`;
 
                 if (entries.length === 0) {
-                    cartItems.innerHTML = '<div class="cart-empty">Your cart is waiting for its first fragrance.<br><br><a class="button" href="#collection" data-close-cart>Explore the collection</a></div>';
+                    cartItems.innerHTML = '<div class="cart-empty">Your cart is waiting for your first selection.<br><br><a class="button" href="#collection" data-close-cart>Explore fragrances</a><br><br><a href="watches.html">Browse timepieces ↗</a></div>';
                     cartEnquiry.removeAttribute('href');
                     cartEnquiry.setAttribute('aria-disabled', 'true');
                     cartEnquiry.tabIndex = -1;
                     return;
                 }
 
-                cartItems.innerHTML = entries.map(([name, item]) => `
+                cartItems.innerHTML = entries.map(([id, item]) => `
                     <article class="cart-item">
                         <div>
-                            <h3>${escapeHtml(name)}</h3>
+                            <h3>${escapeHtml(item.name)}</h3>
+                            <p>${item.category === 'fragrance' ? 'Fragrance' : 'Timepiece'}</p>
                             <p>Price and availability confirmed by GioEquinox</p>
                         </div>
-                        <div class="cart-item-actions" aria-label="Quantity for ${escapeHtml(name)}">
-                            <button class="cart-action" type="button" data-cart-action="decrease" data-product="${escapeHtml(name)}" aria-label="Decrease ${escapeHtml(name)} quantity">−</button>
+                        <div class="cart-item-actions" aria-label="Quantity for ${escapeHtml(item.name)}">
+                            <button class="cart-action" type="button" data-cart-action="decrease" data-product="${escapeHtml(id)}" aria-label="Decrease ${escapeHtml(item.name)} quantity">−</button>
                             <span class="cart-quantity">${item.quantity}</span>
-                            <button class="cart-action" type="button" data-cart-action="increase" data-product="${escapeHtml(name)}" aria-label="Increase ${escapeHtml(name)} quantity">+</button>
+                            <button class="cart-action" type="button" data-cart-action="increase" data-product="${escapeHtml(id)}" aria-label="Increase ${escapeHtml(item.name)} quantity">+</button>
                         </div>
-                        <button class="cart-item-remove" type="button" data-cart-action="remove" data-product="${escapeHtml(name)}">Remove</button>
+                        <button class="cart-item-remove" type="button" data-cart-action="remove" data-product="${escapeHtml(id)}">Remove</button>
                     </article>`).join('');
 
-                const orderDetails = entries.map(([name, item]) => `- ${name} x ${item.quantity}`).join('\n');
+                const orderDetails = entries.map(([, item]) =>
+                    `- ${item.category === 'fragrance' ? 'Fragrance' : 'Timepiece'}: ${item.name} x ${item.quantity}`
+                ).join('\n');
                 const body = encodeURIComponent(`Hello GioEquinox,\n\nI would like to enquire about:\n${orderDetails}\n\nPlease confirm the prices and availability.\n\nThank you.`);
                 cartEnquiry.href = `https://wa.me/260777907071?text=${body}`;
                 cartEnquiry.target = '_blank';
@@ -950,12 +987,13 @@
                 const button = event.target.closest('button[data-add-to-cart]');
                 if (!button) return;
                 const name = button.closest('.product-card').dataset.product;
-                const quantity = cart[name]?.quantity || 0;
+                const id = `${cartCategory}:${name}`;
+                const quantity = cart[id]?.quantity || 0;
                 if (quantity >= 99) {
                     notify(`You can add up to 99 of ${name}.`);
                     return;
                 }
-                cart[name] = { quantity: quantity + 1 };
+                cart[id] = { name, category: cartCategory, quantity: quantity + 1 };
                 saveCart();
                 renderCart();
                 notify(`${name} added to your cart.`);
@@ -994,6 +1032,16 @@
             document.getElementById('cart-close').addEventListener('click', () => cartDialog.close());
             cartDialog.addEventListener('click', event => {
                 if (event.target === cartDialog) cartDialog.close();
+            });
+            window.addEventListener('storage', event => {
+                if (event.key !== cartStorageKey && event.key !== null) return;
+                try {
+                    cart = parseCart(event.newValue);
+                    renderCart();
+                } catch (error) {
+                    console.warn('Updated shared shopping cart could not be read.', error);
+                    notify('The shared cart could not be refreshed.');
+                }
             });
 
             document.getElementById('product-grid').addEventListener('click', event => {
