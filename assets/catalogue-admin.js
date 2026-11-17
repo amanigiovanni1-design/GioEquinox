@@ -49,12 +49,22 @@
             const name = document.createElement('h3');
             name.textContent = product.name;
             const meta = document.createElement('p');
-            meta.textContent = `${product.product_type === 'watch' ? 'Timepiece' : 'Fragrance'} · ${product.active ? 'Published' : 'Unpublished'}`;
+            meta.textContent = `${product.product_type === 'watch' ? 'Timepiece' : 'Fragrance'} · ${product.active ? 'Published' : 'Taken off catalogue'}`;
             details.append(name, meta);
             const price = document.createElement('span');
             price.className = 'product-price';
             price.textContent = formatPrice(product.price);
-            item.append(image, details, price);
+            const availabilityButton = document.createElement('button');
+            availabilityButton.type = 'button';
+            availabilityButton.className = 'product-status-button';
+            availabilityButton.dataset.productId = product.id;
+            availabilityButton.dataset.active = String(product.active);
+            availabilityButton.textContent = product.active ? 'Take down' : 'Republish';
+            availabilityButton.setAttribute(
+                'aria-label',
+                `${product.active ? 'Take down' : 'Republish'} ${product.name}`
+            );
+            item.append(image, details, price, availabilityButton);
             productList.append(item);
         });
     };
@@ -65,6 +75,49 @@
         if (!Array.isArray(products)) throw new Error('Supabase returned an invalid product list.');
         renderProducts(products);
     };
+
+    productList.addEventListener('click', async event => {
+        const button = event.target.closest('button[data-product-id]');
+        if (!button) return;
+
+        const productId = button.dataset.productId;
+        const shouldActivate = button.dataset.active !== 'true';
+        button.disabled = true;
+        setStatus(listStatus, shouldActivate ? 'Republishing product…' : 'Taking product off the catalogue…');
+        try {
+            await api.setProductActive(productId, shouldActivate);
+            setStatus(
+                listStatus,
+                shouldActivate
+                    ? 'Product republished. Refreshing the list…'
+                    : 'Product taken off the public catalogue. Refreshing the list…',
+                'success'
+            );
+            try {
+                await loadProducts();
+            } catch (error) {
+                console.error('Product availability changed, but the admin list could not be refreshed.', error);
+                setStatus(
+                    listStatus,
+                    `Product availability changed, but the list could not be refreshed: ${error.message}`,
+                    'error'
+                );
+                button.disabled = false;
+                return;
+            }
+            setStatus(
+                listStatus,
+                shouldActivate
+                    ? 'Product republished on the public catalogue.'
+                    : 'Product taken off the public catalogue. You can republish it here later.',
+                'success'
+            );
+        } catch (error) {
+            console.error('Product availability could not be changed.', error);
+            setStatus(listStatus, error.message || 'Product availability could not be changed.', 'error');
+            button.disabled = false;
+        }
+    });
 
     const verifySession = async session => {
         const currentSession = await api.authorizedSession();

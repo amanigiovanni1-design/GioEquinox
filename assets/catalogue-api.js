@@ -35,6 +35,7 @@
         if (issue) throw issue;
         const response = await fetch(`${supabaseUrl}${path}`, {
             method,
+            ...(method === 'GET' ? { cache: 'no-store' } : {}),
             headers: {
                 apikey: anonKey,
                 ...(token ? { Authorization: `Bearer ${token}` } : {}),
@@ -121,6 +122,28 @@
         return request('/rest/v1/catalogue_products?select=id,name,description,price,product_type,tags,image_path,active,created_at&order=created_at.desc', {
             token: session?.access_token
         });
+    };
+
+    const setProductActive = async (productId, active) => {
+        const session = await authorizedSession();
+        if (typeof productId !== 'string' || !/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(productId)) {
+            throw new Error('Choose a valid catalogue product.');
+        }
+        if (typeof active !== 'boolean') throw new Error('Choose whether the product should be published.');
+
+        const rows = await request(`/rest/v1/catalogue_products?id=eq.${encodeURIComponent(productId)}`, {
+            method: 'PATCH',
+            token: session.access_token,
+            body: JSON.stringify({ active }),
+            headers: {
+                'Content-Type': 'application/json',
+                Prefer: 'return=representation'
+            }
+        });
+        if (!Array.isArray(rows) || rows.length !== 1 || rows[0].active !== active) {
+            throw new Error('Supabase did not confirm the product availability change.');
+        }
+        return rows[0];
     };
 
     const createProduct = async ({ name, description, price, productType, tags, image }) => {
@@ -220,6 +243,7 @@
         adminSession,
         authorizedSession,
         listProducts,
+        setProductActive,
         createProduct,
         publicImageUrl
     };

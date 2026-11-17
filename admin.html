@@ -39,19 +39,23 @@
         .preview { display: flex; align-items: center; gap: 14px; color: var(--muted); font: 12px/1.5 Arial, sans-serif; }
         .preview img { width: 70px; height: 70px; object-fit: cover; border: 1px solid var(--line); }
         .product-list { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
-        .product-row { display: grid; grid-template-columns: 64px 1fr auto; align-items: center; gap: 14px; padding: 12px; border: 1px solid var(--line); }
+        .product-row { display: grid; grid-template-columns: 64px 1fr auto auto; align-items: center; gap: 14px; padding: 12px; border: 1px solid var(--line); }
         .product-row img { width: 64px; height: 64px; object-fit: cover; }
         .product-row h3 { margin: 0; font-size: 17px; }
         .product-row p { margin: 4px 0 0; color: var(--muted); font: 12px/1.5 Arial, sans-serif; }
         .product-price { color: var(--accent); font: 13px/1.4 Arial, sans-serif; white-space: nowrap; }
+        .product-status-button { justify-self: auto; padding: 9px 12px; border-color: var(--line); background: transparent; color: var(--text); white-space: nowrap; }
+        .product-status-button[data-active="true"] { border-color: var(--error); color: var(--error); }
+        .product-status-button[data-active="false"] { border-color: var(--success); color: var(--success); }
         [hidden] { display: none !important; }
         @media (max-width: 640px) {
             .header-inner { align-items: flex-start; flex-direction: column; }
             nav { flex-wrap: wrap; }
             .form-grid { grid-template-columns: 1fr; }
-            .product-row { grid-template-columns: 52px 1fr; }
+            .product-row { grid-template-columns: 52px 1fr auto; gap: 10px; }
             .product-row img { width: 52px; height: 52px; }
             .product-price { grid-column: 2; }
+            .product-status-button { grid-column: 2 / -1; justify-self: start; }
         }
     </style>
 </head>
@@ -69,7 +73,7 @@
     <main class="shell">
         <p class="eyebrow">Owner tools</p>
         <h1>Manage the catalogue</h1>
-        <p class="intro">Sign in with the owner account to add a fragrance or timepiece. Published products appear on the matching public catalogue.</p>
+        <p class="intro">Sign in with the owner account to add a fragrance or timepiece, or take an unavailable product off the public catalogue. You can republish it later without re-uploading.</p>
         <p class="help">Prices are entered in Zambian kwacha (ZMW). Upload a JPEG, PNG, or WebP image up to 5 MB.</p>
 
         <section class="panel" id="sign-in-panel" aria-labelledby="sign-in-heading">
@@ -117,7 +121,7 @@
                 <p class="status" id="product-status" role="status" aria-live="polite"></p>
             </form>
             <div class="panel" style="margin-top: 28px; padding: 20px;">
-                <h2>Recently added</h2>
+                <h2>Manage products</h2>
                 <p class="status" id="list-status" role="status" aria-live="polite"></p>
                 <ul class="product-list" id="product-list"></ul>
             </div>

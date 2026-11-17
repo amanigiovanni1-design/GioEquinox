@@ -26,7 +26,7 @@ The shared cart is saved in the visitor's browser and is not an online database.
 
 ## Owner catalogue management
 
-The owner dashboard at `admin.html` lets an authorized owner sign in and add a fragrance or timepiece with a name, ZMW price, description, category tags, and photo. New products appear on the corresponding public catalogue. The backend uses Supabase Auth, Postgres row-level security, and a public-read image bucket with admin-only uploads. The browser configuration contains only the Supabase project URL and public anon/publishable key; never put a service-role or secret key in this site.
+The owner dashboard at `admin.html` lets an authorized owner sign in and add a fragrance or timepiece with a name, ZMW price, description, category tags, and photo. New products appear on the corresponding public catalogue. The owner can also take a product off the public catalogue when it is unavailable, then republish it later without re-uploading. This preserves the product record and image while hiding the product from visitors. The backend uses Supabase Auth, Postgres row-level security, and a public-read image bucket with admin-only uploads and updates. The browser configuration contains only the Supabase project URL and public anon/publishable key; never put a service-role or secret key in this site.
 
 To enable the dashboard:
 
