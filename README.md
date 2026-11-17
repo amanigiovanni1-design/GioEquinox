@@ -11,4 +11,5 @@ Open `equinox.html` in a browser. The page is self-contained and does not requir
 - Responsive landing page and perfume catalogue
 - Scent-family filters
 - Per-perfume like/dislike controls saved in the current browser
+- Persistent shopping cart with quantity controls and email order enquiries
 - Store address, phone, and email links
