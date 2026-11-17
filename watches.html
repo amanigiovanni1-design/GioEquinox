@@ -85,16 +85,24 @@
         .watch-card:hover { transform: translateY(-3px); border-color: rgb(195 165 110 / 55%); }
         .watch-card[hidden] { display: none; }
         .watch-art { position: relative; min-height: 320px; display: grid; place-items: center; overflow: hidden; background: var(--art-bg, linear-gradient(145deg,#343a32,#20241f)); }
-        .watch-art::before { position: absolute; width: 250px; height: 250px; border: 1px solid rgb(235 221 188 / 16%); border-radius: 50%; content: ""; }
-        .watch-art::after { position: absolute; width: 310px; height: 310px; border: 1px solid rgb(235 221 188 / 9%); border-radius: 50%; content: ""; }
-        .watch-svg { position: relative; z-index: 1; width: min(79%, 195px); height: auto; overflow: visible; filter: drop-shadow(14px 18px 14px rgb(0 0 0 / 35%)); transition: transform .35s ease; }
-        .watch-card:hover .watch-svg { transform: translateY(-4px) rotate(3deg); }
+        .watch-art::before { position: absolute; z-index: 2; width: 250px; height: 250px; border: 1px solid rgb(235 221 188 / 16%); border-radius: 50%; content: ""; pointer-events: none; }
+        .watch-art::after { position: absolute; z-index: 2; width: 310px; height: 310px; border: 1px solid rgb(235 221 188 / 9%); border-radius: 50%; content: ""; pointer-events: none; }
+        .watch-photo { position: relative; z-index: 1; width: 91%; height: 250px; object-fit: contain; border-radius: 3px; filter: drop-shadow(14px 18px 14px rgb(0 0 0 / 30%)); transition: transform .35s ease; }
+        .watch-card:hover .watch-photo { transform: translateY(-4px); }
+        .watch-svg { display: none; }
         .watch-info { display: flex; flex-direction: column; justify-content: center; padding: 25px clamp(18px, 3vw, 36px); }
         .watch-meta { display: flex; justify-content: space-between; gap: 10px; color: var(--brass); font-size: 8px; font-weight: 700; letter-spacing: .17em; text-transform: uppercase; }
         .watch-info h3 { margin: 12px 0 8px; font-family: var(--serif); font-size: clamp(24px, 3vw, 34px); font-weight: 400; letter-spacing: -.035em; }
         .watch-description { margin: 0; color: #aeb1a7; font-size: 10px; line-height: 1.8; }
+        .watch-image-credit { margin: 0 0 8px; color: #aeb1a7; font-size: 8px; line-height: 1.5; }
+        .watch-image-credit a { color: #d9c99f; text-decoration: underline; }
         .watch-specs { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 15px; }
         .watch-specs span { padding: 5px 7px; border: 1px solid var(--line); color: #c8c8bc; font-size: 7px; letter-spacing: .12em; text-transform: uppercase; }
+        .catalog-price-note { margin: 0 0 22px; padding: 13px 16px; border-left: 2px solid var(--brass); background: #202722; color: var(--muted); font-size: 10px; line-height: 1.7; }
+        .catalog-price-note a { color: var(--brass-bright); }
+        .watch-price { margin: 15px 0 2px; color: var(--brass-bright); font-size: 20px; font-weight: 700; }
+        .watch-price span { margin-left: 5px; color: var(--muted); font-size: 8px; font-weight: 400; }
+        .watch-price-source { display: inline-block; margin-bottom: 3px; color: #d9c99f; font-size: 8px; text-decoration: underline; }
         .watch-bottom { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 19px; padding-top: 14px; border-top: 1px solid var(--line); }
         .watch-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
         .add-to-cart { min-height: 34px; padding: 0 12px; border: 1px solid var(--brass); border-radius: 2px; background: var(--brass); color: #171912; font-size: 8px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; cursor: pointer; }
@@ -185,6 +193,8 @@
             .watch-description { font-size: 9px; }
             .watch-specs { gap: 4px; margin-top: 10px; }
             .watch-specs span { padding: 4px 5px; font-size: 6px; }
+            .watch-price { margin-top: 10px; font-size: 18px; }
+            .watch-price-source { font-size: 7px; }
             .watch-bottom { align-items: start; flex-direction: column; gap: 10px; }
             .watch-actions { justify-content: space-between; width: 100%; }
             .craft { grid-template-columns: 1fr; }
@@ -291,8 +301,9 @@
                 <p class="reaction-summary" id="reaction-summary" aria-live="polite">Your likes: <strong>0</strong> · Dislikes: <strong>0</strong></p>
             </div>
             <div class="watch-grid" id="product-grid">
-                <article class="watch-card" data-category="classic" data-product="Meridian 01">
+                <article class="watch-card" data-category="classic minimal" data-product="Poedagar 978" data-price="453" data-usd-price="21.99">
                     <div class="watch-art" style="--art-bg:radial-gradient(ellipse at 50% 42%,#59604c,#343a30 60%,#222720)">
+                        <img class="watch-photo" src="assets/images/watch-poedagar-style.jpg" alt="Representative analog watch style image; exact Poedagar model is not shown" loading="lazy" decoding="async">
                         <svg class="watch-svg" viewBox="0 0 180 300" role="img" aria-label="Meridian 01 brass case and deep green dial">
                             <defs><linearGradient id="m-strap" x1="0" x2="1"><stop stop-color="#40372e"/><stop offset=".5" stop-color="#746349"/><stop offset="1" stop-color="#352e26"/></linearGradient><linearGradient id="m-case"><stop stop-color="#78633f"/><stop offset=".4" stop-color="#dfc58b"/><stop offset="1" stop-color="#746143"/></linearGradient><radialGradient id="m-dial"><stop stop-color="#344334"/><stop offset="1" stop-color="#131a15"/></radialGradient></defs>
                             <path d="M65 1h50l11 67H54L65 1Zm-11 231h72l-11 67H65l-11-67Z" fill="url(#m-strap)"/><path d="M69 13h42M61 242h58" stroke="#b09b6d" stroke-opacity=".5" stroke-width="2"/>
@@ -301,10 +312,20 @@
                             <path d="M90 150v-32m0 32 25 15" stroke="#eee5d0" stroke-width="3" stroke-linecap="round"/><path d="m90 150 29-34" stroke="#c98555" stroke-width="1.5"/><circle cx="90" cy="150" r="4" fill="#dfc58e"/><rect x="156" y="143" width="11" height="15" rx="3" fill="url(#m-case)"/>
                         </svg>
                     </div>
-                    <div class="watch-info"><div class="watch-meta"><span>01 · Automatic style</span><span>Classic</span></div><h3>Meridian 01</h3><p class="watch-description">A deep forest dial, balanced indices and warm metal accents. An easy signature, dressed up or down.</p><div class="watch-specs"><span>Forest dial</span><span>Brass-tone case</span><span>Leather style</span></div><div class="watch-bottom"><div class="watch-actions"><button class="add-to-cart" type="button" data-add-to-cart>Add to cart</button><a class="whatsapp-link" href="https://wa.me/260777907071?text=Hello%20GioEquinox%2C%20I%20would%20like%20to%20enquire%20about%20the%20Meridian%2001%20watch." target="_blank" rel="noopener noreferrer">Ask on WhatsApp ↗</a></div><div class="reaction-controls" role="group" aria-label="Rate Meridian 01"><button class="reaction-button" type="button" data-reaction="like" aria-label="Like Meridian 01" aria-pressed="false">♡</button><button class="reaction-button" type="button" data-reaction="dislike" aria-label="Dislike Meridian 01" aria-pressed="false">×</button></div></div></div>
+                    <div class="watch-info">
+                        <p class="watch-image-credit">Representative style photo · <a href="https://unsplash.com/license" target="_blank" rel="noopener noreferrer">Unsplash License</a></p>
+                        <div class="watch-meta"><span>01 · Poedagar</span><span>Classic</span></div>
+                        <h3>Poedagar 978</h3>
+                        <p class="watch-description">A clean analog profile. The image is representative; the listed Poedagar 978 model is not pictured.</p>
+                        <div class="watch-specs"><span>Analog</span><span>Classic profile</span><span>Style reference</span></div>
+                        <p class="watch-price">K453 <span>reference</span></p>
+                        <a class="watch-price-source" href="https://www.walmart.com/search?q=Poedagar+978+watch" target="_blank" rel="noopener noreferrer">Walmart listing · US$21.99 ↗</a>
+                        <div class="watch-bottom"><div class="watch-actions"><button class="add-to-cart" type="button" data-add-to-cart>Add to cart</button><a class="whatsapp-link" href="https://wa.me/260777907071?text=Hello%20GioEquinox%2C%20I%20would%20like%20to%20enquire%20about%20Poedagar%20978." target="_blank" rel="noopener noreferrer">Ask on WhatsApp ↗</a></div><div class="reaction-controls" role="group" aria-label="Rate Poedagar 978"><button class="reaction-button" type="button" data-reaction="like" aria-label="Like Poedagar 978" aria-pressed="false">♡</button><button class="reaction-button" type="button" data-reaction="dislike" aria-label="Dislike Poedagar 978" aria-pressed="false">×</button></div></div>
+                    </div>
                 </article>
-                <article class="watch-card" data-category="sport" data-product="Obsidian Chrono">
+                <article class="watch-card" data-category="sport" data-product="SKMEI 2471" data-price="1124" data-usd-price="54.63">
                     <div class="watch-art" style="--art-bg:radial-gradient(ellipse at 50% 42%,#484c4e,#282c2e 59%,#1b1e20)">
+                        <img class="watch-photo" src="assets/images/watch-skmei-1167.jpg" alt="SKMEI 1167 watch photo; the reference price is for the SKMEI 2471 listing" loading="lazy" decoding="async">
                         <svg class="watch-svg" viewBox="0 0 180 300" role="img" aria-label="Obsidian Chrono steel case and charcoal dial">
                             <defs><linearGradient id="o-strap" x1="0" x2="1"><stop stop-color="#777b78"/><stop offset=".5" stop-color="#d0d0c8"/><stop offset="1" stop-color="#696d69"/></linearGradient><linearGradient id="o-case"><stop stop-color="#5a5d5b"/><stop offset=".4" stop-color="#e0ddd4"/><stop offset="1" stop-color="#666966"/></linearGradient><radialGradient id="o-dial"><stop stop-color="#34393a"/><stop offset="1" stop-color="#111415"/></radialGradient></defs>
                             <path d="M65 1h50l11 67H54L65 1Zm-11 231h72l-11 67H65l-11-67Z" fill="url(#o-strap)"/><path d="M70 12h40M61 242h58" stroke="#fff" stroke-opacity=".28" stroke-width="2"/>
@@ -314,10 +335,20 @@
                             <path d="M90 150v-30m0 30 25 15" stroke="#f1eee5" stroke-width="3" stroke-linecap="round"/><path d="m90 150 28-33" stroke="#bc7557" stroke-width="1.5"/><circle cx="90" cy="150" r="4" fill="#e2ded1"/><rect x="157" y="137" width="12" height="9" rx="3" fill="url(#o-case)"/><rect x="157" y="153" width="12" height="9" rx="3" fill="url(#o-case)"/>
                         </svg>
                     </div>
-                    <div class="watch-info"><div class="watch-meta"><span>02 · Chronograph style</span><span>Sport</span></div><h3>Obsidian Chrono</h3><p class="watch-description">A bold dark face with layered sub-dial detailing and a crisp steel-toned finish.</p><div class="watch-specs"><span>Charcoal dial</span><span>Steel-tone case</span><span>Chrono style</span></div><div class="watch-bottom"><div class="watch-actions"><button class="add-to-cart" type="button" data-add-to-cart>Add to cart</button><a class="whatsapp-link" href="https://wa.me/260777907071?text=Hello%20GioEquinox%2C%20I%20would%20like%20to%20enquire%20about%20the%20Obsidian%20Chrono%20watch." target="_blank" rel="noopener noreferrer">Ask on WhatsApp ↗</a></div><div class="reaction-controls" role="group" aria-label="Rate Obsidian Chrono"><button class="reaction-button" type="button" data-reaction="like" aria-label="Like Obsidian Chrono" aria-pressed="false">♡</button><button class="reaction-button" type="button" data-reaction="dislike" aria-label="Dislike Obsidian Chrono" aria-pressed="false">×</button></div></div></div>
+                    <div class="watch-info">
+                        <p class="watch-image-credit">Photo: <a href="https://commons.wikimedia.org/wiki/File:Skmei_1167.jpg" target="_blank" rel="noopener noreferrer">Raimundo Augusto Júnior</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener noreferrer">CC BY-SA 4.0</a></p>
+                        <div class="watch-meta"><span>02 · SKMEI</span><span>Sport</span></div>
+                        <h3>SKMEI 2471</h3>
+                        <p class="watch-description">A sporty everyday design. The photo shows a SKMEI 1167; the reference price is for the separate 2471 listing.</p>
+                        <div class="watch-specs"><span>Sport style</span><span>SKMEI 2471 ref.</span><span>Photo: 1167</span></div>
+                        <p class="watch-price">K1,124 <span>reference</span></p>
+                        <a class="watch-price-source" href="https://www.shopskmei.com/product/skmei-2471-5-bar-analog-digital-sport-watch/" target="_blank" rel="noopener noreferrer">SKMEI Store listing · US$54.63 ↗</a>
+                        <div class="watch-bottom"><div class="watch-actions"><button class="add-to-cart" type="button" data-add-to-cart>Add to cart</button><a class="whatsapp-link" href="https://wa.me/260777907071?text=Hello%20GioEquinox%2C%20I%20would%20like%20to%20enquire%20about%20SKMEI%202471." target="_blank" rel="noopener noreferrer">Ask on WhatsApp ↗</a></div><div class="reaction-controls" role="group" aria-label="Rate SKMEI 2471"><button class="reaction-button" type="button" data-reaction="like" aria-label="Like SKMEI 2471" aria-pressed="false">♡</button><button class="reaction-button" type="button" data-reaction="dislike" aria-label="Dislike SKMEI 2471" aria-pressed="false">×</button></div></div>
+                    </div>
                 </article>
-                <article class="watch-card" data-category="minimal" data-product="Slate No. 7">
+                <article class="watch-card" data-category="classic" data-product="Rolex Datejust 36" data-price="167730" data-usd-price="8150">
                     <div class="watch-art" style="--art-bg:radial-gradient(ellipse at 50% 42%,#62635b,#353830 59%,#22251f)">
+                        <img class="watch-photo" src="assets/images/watch-rolex-datejust.jpg" alt="Rolex Datejust reference photo; photographed watch has a different bezel than the listed model" loading="lazy" decoding="async">
                         <svg class="watch-svg" viewBox="0 0 180 300" role="img" aria-label="Slate No. 7 minimalist case and ivory dial">
                             <defs><linearGradient id="s-strap" x1="0" x2="1"><stop stop-color="#292c29"/><stop offset=".5" stop-color="#555a53"/><stop offset="1" stop-color="#252824"/></linearGradient><linearGradient id="s-case"><stop stop-color="#726a56"/><stop offset=".4" stop-color="#d2bd8c"/><stop offset="1" stop-color="#5d5749"/></linearGradient><radialGradient id="s-dial"><stop stop-color="#e6dfce"/><stop offset="1" stop-color="#a9a28f"/></radialGradient></defs>
                             <path d="M65 1h50l11 67H54L65 1Zm-11 231h72l-11 67H65l-11-67Z" fill="url(#s-strap)"/><path d="M70 13h40M61 242h58" stroke="#aaa48f" stroke-opacity=".5" stroke-width="2"/>
@@ -326,10 +357,20 @@
                             <path d="M90 150v-34m0 34 22 17" stroke="#343932" stroke-width="3" stroke-linecap="round"/><path d="m90 150 28-29" stroke="#986c4c" stroke-width="1.5"/><circle cx="90" cy="150" r="4" fill="#87744f"/><rect x="155" y="144" width="11" height="13" rx="3" fill="url(#s-case)"/>
                         </svg>
                     </div>
-                    <div class="watch-info"><div class="watch-meta"><span>03 · Slim profile</span><span>Minimal</span></div><h3>Slate No. 7</h3><p class="watch-description">An uncluttered ivory dial, fine markers and a versatile silhouette that goes with everything.</p><div class="watch-specs"><span>Ivory dial</span><span>Slim profile</span><span>Everyday</span></div><div class="watch-bottom"><div class="watch-actions"><button class="add-to-cart" type="button" data-add-to-cart>Add to cart</button><a class="whatsapp-link" href="https://wa.me/260777907071?text=Hello%20GioEquinox%2C%20I%20would%20like%20to%20enquire%20about%20the%20Slate%20No.%207%20watch." target="_blank" rel="noopener noreferrer">Ask on WhatsApp ↗</a></div><div class="reaction-controls" role="group" aria-label="Rate Slate No. 7"><button class="reaction-button" type="button" data-reaction="like" aria-label="Like Slate No. 7" aria-pressed="false">♡</button><button class="reaction-button" type="button" data-reaction="dislike" aria-label="Dislike Slate No. 7" aria-pressed="false">×</button></div></div></div>
+                    <div class="watch-info">
+                        <p class="watch-image-credit">Photo: <a href="https://commons.wikimedia.org/wiki/File:Rolex_Datejust.JPG" target="_blank" rel="noopener noreferrer">Mike Searson</a> · <a href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank" rel="noopener noreferrer">CC0</a></p>
+                        <div class="watch-meta"><span>03 · Rolex</span><span>Classic</span></div>
+                        <h3>Rolex Datejust 36</h3>
+                        <p class="watch-description">A classic Datejust reference. The pictured vintage example has a different bezel from the retailer's current 36 mm listing.</p>
+                        <div class="watch-specs"><span>Datejust</span><span>36 mm listing ref.</span><span>Classic</span></div>
+                        <p class="watch-price">K167,730 <span>reference</span></p>
+                        <a class="watch-price-source" href="https://www.mayors.com/Rolex/Datejust-36-M126200+0002/p/17303970" target="_blank" rel="noopener noreferrer">Mayors listing · US$8,150 ↗</a>
+                        <div class="watch-bottom"><div class="watch-actions"><button class="add-to-cart" type="button" data-add-to-cart>Add to cart</button><a class="whatsapp-link" href="https://wa.me/260777907071?text=Hello%20GioEquinox%2C%20I%20would%20like%20to%20enquire%20about%20Rolex%20Datejust%2036." target="_blank" rel="noopener noreferrer">Ask on WhatsApp ↗</a></div><div class="reaction-controls" role="group" aria-label="Rate Rolex Datejust 36"><button class="reaction-button" type="button" data-reaction="like" aria-label="Like Rolex Datejust 36" aria-pressed="false">♡</button><button class="reaction-button" type="button" data-reaction="dislike" aria-label="Dislike Rolex Datejust 36" aria-pressed="false">×</button></div></div>
+                    </div>
                 </article>
-                <article class="watch-card" data-category="sport classic" data-product="Equinox GMT">
+                <article class="watch-card" data-category="sport" data-product="Casio G-Shock DW5600E-1V" data-price="1336" data-usd-price="64.92">
                     <div class="watch-art" style="--art-bg:radial-gradient(ellipse at 50% 42%,#475158,#292f32 59%,#1b2022)">
+                        <img class="watch-photo" src="assets/images/watch-casio-gshock-dw5600e.jpg" alt="Casio G-Shock DW-5600E watch" loading="lazy" decoding="async">
                         <svg class="watch-svg" viewBox="0 0 180 300" role="img" aria-label="Equinox GMT blue and black bezel watch">
                             <defs><linearGradient id="g-strap" x1="0" x2="1"><stop stop-color="#343c42"/><stop offset=".5" stop-color="#697681"/><stop offset="1" stop-color="#30383e"/></linearGradient><linearGradient id="g-case"><stop stop-color="#646c6d"/><stop offset=".4" stop-color="#d4d0c1"/><stop offset="1" stop-color="#555d60"/></linearGradient><radialGradient id="g-dial"><stop stop-color="#293b43"/><stop offset="1" stop-color="#10191e"/></radialGradient></defs>
                             <path d="M65 1h50l11 67H54L65 1Zm-11 231h72l-11 67H65l-11-67Z" fill="url(#g-strap)"/><path d="M69 13h42M61 242h58" stroke="#bac1bd" stroke-opacity=".4" stroke-width="2"/>
@@ -338,10 +379,20 @@
                             <path d="M90 150v-33m0 33 23 14" stroke="#e5dfcd" stroke-width="3" stroke-linecap="round"/><path d="m90 150 30-32" stroke="#d07b57" stroke-width="1.5"/><circle cx="90" cy="150" r="4" fill="#d8c492"/><rect x="158" y="143" width="11" height="14" rx="3" fill="url(#g-case)"/>
                         </svg>
                     </div>
-                    <div class="watch-info"><div class="watch-meta"><span>04 · Dual-time style</span><span>Sport</span></div><h3>Equinox GMT</h3><p class="watch-description">A two-tone bezel and layered blue-black dial made for days that run beyond one time zone.</p><div class="watch-specs"><span>Two-tone bezel</span><span>Blue-black dial</span><span>Travel style</span></div><div class="watch-bottom"><div class="watch-actions"><button class="add-to-cart" type="button" data-add-to-cart>Add to cart</button><a class="whatsapp-link" href="https://wa.me/260777907071?text=Hello%20GioEquinox%2C%20I%20would%20like%20to%20enquire%20about%20the%20Equinox%20GMT%20watch." target="_blank" rel="noopener noreferrer">Ask on WhatsApp ↗</a></div><div class="reaction-controls" role="group" aria-label="Rate Equinox GMT"><button class="reaction-button" type="button" data-reaction="like" aria-label="Like Equinox GMT" aria-pressed="false">♡</button><button class="reaction-button" type="button" data-reaction="dislike" aria-label="Dislike Equinox GMT" aria-pressed="false">×</button></div></div></div>
+                    <div class="watch-info">
+                        <p class="watch-image-credit">Photo: Simon Le Bon / Pittigrilli · public domain (<a href="https://commons.wikimedia.org/wiki/File:Casio_G-Shock_DW-5600E_wristwatch.jpg" target="_blank" rel="noopener noreferrer">Wikimedia Commons</a>)</p>
+                        <div class="watch-meta"><span>04 · Casio</span><span>Sport</span></div>
+                        <h3>Casio G-Shock DW5600E-1V</h3>
+                        <p class="watch-description">A classic square digital G-Shock. The Walmart listing used for this reference price was out of stock when checked.</p>
+                        <div class="watch-specs"><span>Digital</span><span>G-Shock</span><span>DW-5600E</span></div>
+                        <p class="watch-price">K1,336 <span>reference</span></p>
+                        <a class="watch-price-source" href="https://www.walmart.com/search?q=Casio+G-Shock+DW5600E-1V" target="_blank" rel="noopener noreferrer">Walmart listing (out of stock) · US$64.92 ↗</a>
+                        <div class="watch-bottom"><div class="watch-actions"><button class="add-to-cart" type="button" data-add-to-cart>Add to cart</button><a class="whatsapp-link" href="https://wa.me/260777907071?text=Hello%20GioEquinox%2C%20I%20would%20like%20to%20enquire%20about%20Casio%20G-Shock%20DW5600E-1V." target="_blank" rel="noopener noreferrer">Ask on WhatsApp ↗</a></div><div class="reaction-controls" role="group" aria-label="Rate Casio G-Shock DW5600E-1V"><button class="reaction-button" type="button" data-reaction="like" aria-label="Like Casio G-Shock DW5600E-1V" aria-pressed="false">♡</button><button class="reaction-button" type="button" data-reaction="dislike" aria-label="Dislike Casio G-Shock DW5600E-1V" aria-pressed="false">×</button></div></div>
+                    </div>
                 </article>
                 <p class="empty-state" id="empty-state" hidden>No timepieces in this edit just yet. View all watches instead.</p>
             </div>
+            <p class="catalog-price-note">Retailer reference prices checked 17 Nov 2026 and converted at US$1 = K20.580374 (about K20.58). These are not confirmed GioEquinox prices; shipping, taxes and import duties are excluded. Please confirm local price, availability, authenticity and exact model with us before ordering. <a href="https://www.exchangerate-api.com/" target="_blank" rel="noopener noreferrer">Rate source ↗</a></p>
         </section>
 
         <section class="craft" id="craft">
@@ -365,16 +416,16 @@
     <dialog class="cart-dialog" id="cart-dialog" aria-labelledby="cart-title">
         <div class="cart-header"><div><h2 id="cart-title">Your cart</h2><p id="cart-item-summary">Your selected timepieces</p></div><button class="cart-close" id="cart-close" type="button" aria-label="Close cart">×</button></div>
         <div class="cart-items" id="cart-items"></div>
-        <div class="cart-footer"><p class="cart-footer-note">Pricing and availability can be confirmed with our team.</p><a class="button cart-checkout" id="cart-enquiry" aria-disabled="true" tabindex="-1">Enquire about your selection on WhatsApp</a></div>
+        <div class="cart-footer"><p class="cart-footer-note">Displayed amounts are online retailer references, not confirmed GioEquinox prices. Shipping, tax and import duties are excluded; ask us to confirm the current local price and availability.</p><a class="button cart-checkout" id="cart-enquiry" aria-disabled="true" tabindex="-1">Enquire about your selection on WhatsApp</a></div>
     </dialog>
     <script>
         (() => {
             const products = [...document.querySelectorAll('.watch-card')];
-            const productNames = new Set(products.map(product => product.dataset.product));
             const cartKey = 'gioequinox-unified-cart';
             const legacyCartKey = 'gioequinox-watch-cart';
             const cartCategory = 'watch';
             const reactionKey = 'gioequinox-watch-reactions';
+            const productPrices = new Map(products.map(product => [`${cartCategory}:${product.dataset.product}`, Number(product.dataset.price)]));
             let cart = {};
             let reactions = {};
             let toastTimer;
@@ -398,7 +449,10 @@
                             parsedCart[id] = {
                                 name: item.name,
                                 category: item.category,
-                                quantity: Math.min(item.quantity, 99)
+                                quantity: Math.min(item.quantity, 99),
+                                price: Number.isSafeInteger(item.price) && item.price >= 0
+                                    ? item.price
+                                    : productPrices.get(id) ?? null
                             };
                         }
                     });
@@ -431,12 +485,13 @@
                 if (legacyCart && typeof legacyCart === 'object' && !Array.isArray(legacyCart)) {
                     Object.entries(legacyCart).forEach(([name, item]) => {
                         const id = `${cartCategory}:${name}`;
-                        if (productNames.has(name) && !cart[id] &&
+                        if (!cart[id] &&
                             Number.isSafeInteger(item?.quantity) && item.quantity > 0) {
                             cart[id] = {
                                 name,
                                 category: cartCategory,
-                                quantity: Math.min(item.quantity, 99)
+                                quantity: Math.min(item.quantity, 99),
+                                price: productPrices.get(id) ?? null
                             };
                         }
                     });
@@ -460,9 +515,12 @@
                     enquiry.tabIndex = -1;
                     return;
                 }
-                items.innerHTML = entries.map(([id, item]) => `<article class="cart-item"><div><h3>${escapeHtml(item.name)}</h3><p>${item.category === 'fragrance' ? 'Fragrance' : 'Timepiece'}</p><p>Price and availability confirmed by GioEquinox</p></div><div class="cart-item-actions" aria-label="Quantity for ${escapeHtml(item.name)}"><button class="cart-action" type="button" data-cart-action="decrease" data-product="${escapeHtml(id)}" aria-label="Decrease ${escapeHtml(item.name)} quantity">−</button><span class="cart-quantity">${item.quantity}</span><button class="cart-action" type="button" data-cart-action="increase" data-product="${escapeHtml(id)}" aria-label="Increase ${escapeHtml(item.name)} quantity">+</button></div><button class="cart-item-remove" type="button" data-cart-action="remove" data-product="${escapeHtml(id)}">Remove</button></article>`).join('');
-                const order = entries.map(([, item]) => `- ${item.category === 'fragrance' ? 'Fragrance' : 'Timepiece'}: ${item.name} x ${item.quantity}`).join('\n');
-                const message = encodeURIComponent(`Hello GioEquinox,\n\nI would like to enquire about:\n${order}\n\nPlease confirm current prices and availability.\n\nThank you.`);
+                items.innerHTML = entries.map(([id, item]) => `<article class="cart-item"><div><h3>${escapeHtml(item.name)}</h3><p>${item.category === 'fragrance' ? 'Fragrance' : 'Timepiece'}</p><p>${item.price === null ? 'Reference price unavailable · please confirm' : `Retailer reference: K${item.price.toLocaleString('en-US')} each`}</p></div><div class="cart-item-actions" aria-label="Quantity for ${escapeHtml(item.name)}"><button class="cart-action" type="button" data-cart-action="decrease" data-product="${escapeHtml(id)}" aria-label="Decrease ${escapeHtml(item.name)} quantity">−</button><span class="cart-quantity">${item.quantity}</span><button class="cart-action" type="button" data-cart-action="increase" data-product="${escapeHtml(id)}" aria-label="Increase ${escapeHtml(item.name)} quantity">+</button></div><button class="cart-item-remove" type="button" data-cart-action="remove" data-product="${escapeHtml(id)}">Remove</button></article>`).join('');
+                const order = entries.map(([, item]) => {
+                    const reference = item.price === null ? 'price to confirm' : `reference K${item.price.toLocaleString('en-US')} each`;
+                    return `- ${item.category === 'fragrance' ? 'Fragrance' : 'Timepiece'}: ${item.name} x ${item.quantity} (${reference})`;
+                }).join('\n');
+                const message = encodeURIComponent(`Hello GioEquinox,\n\nI would like to enquire about:\n${order}\n\nThe listed amounts are online retailer references, not confirmed GioEquinox prices; shipping, taxes and import duties are excluded. Please confirm current local prices, availability and exact models.\n\nThank you.`);
                 enquiry.href = `https://wa.me/260777907071?text=${message}`;
                 enquiry.target = '_blank';
                 enquiry.rel = 'noopener noreferrer';
@@ -477,7 +535,7 @@
                     const id = `${cartCategory}:${name}`;
                     const quantity = cart[id]?.quantity || 0;
                     if (quantity >= 99) { showMessage(`You can add up to 99 of ${name}.`); return; }
-                    cart[id] = { name, category: cartCategory, quantity: quantity + 1 };
+                    cart[id] = { name, category: cartCategory, quantity: quantity + 1, price: Number(add.closest('.watch-card').dataset.price) };
                     saveCart();
                     drawCart();
                     showMessage(`${name} added to your cart.`);

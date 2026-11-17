@@ -280,52 +280,18 @@
         }
         .product-art::before { transform: translate(-54px, 24px); }
         .product-art::after { transform: translate(60px, -38px) scale(.72); }
-        .bottle {
-            position: relative;
-            z-index: 1;
-            width: 94px;
-            height: 140px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid rgb(255 255 255 / 65%);
-            border-radius: 24px 24px 16px 16px;
-            background: linear-gradient(110deg, rgb(255 255 255 / 48%), transparent 26%, rgb(0 0 0 / 13%) 78%), var(--bottle, #8b5a58);
-            box-shadow: 10px 19px 24px rgb(25 18 26 / 23%), inset 5px 0 9px rgb(255 255 255 / 17%);
-        }
-        .bottle::before {
-            position: absolute;
-            top: -19px;
-            width: 30px;
-            height: 20px;
-            border-radius: 4px 4px 2px 2px;
-            background: linear-gradient(90deg, #84766f, #e1d1b3 48%, #786c68);
-            content: "";
-        }
-        .bottle::after {
-            position: absolute;
-            right: 10px;
-            bottom: -8px;
-            left: 10px;
-            height: 6px;
-            border-radius: 50%;
-            background: rgb(27 19 24 / 25%);
-            content: "";
-            filter: blur(5px);
-        }
-        .bottle-label {
-            width: 72px;
-            padding: 11px 3px 9px;
-            background: rgb(249 242 228 / 88%);
-            color: #382b34;
-            text-align: center;
-        }
-        .bottle-label strong { display: block; font-family: var(--serif); font-size: 10px; font-weight: 400; letter-spacing: .07em; }
-        .bottle-label small { display: block; margin-top: 4px; font-size: 5px; letter-spacing: .13em; }
+        .product-art::before, .product-art::after { display: none; }
+        .product-photo { position: relative; z-index: 1; width: 100%; height: 100%; padding: 10px; object-fit: contain; }
+        .bottle { display: none; }
         .product-info { padding: 19px 19px 17px; }
         .product-meta { display: flex; justify-content: space-between; gap: 12px; color: #8e778b; font-size: 9px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
         .product-info h3 { margin: 11px 0 7px; font-family: var(--serif); font-size: 25px; font-weight: 400; letter-spacing: -.025em; }
         .product-notes { min-height: 38px; margin: 0; color: var(--muted); font-size: 12px; line-height: 1.6; }
+        .catalog-price-note { margin: 0 0 22px; padding: 13px 16px; border-left: 2px solid #b2946b; background: #f3eee8; color: var(--muted); font-size: 11px; line-height: 1.65; }
+        .catalog-price-note a { color: var(--plum); }
+        .product-price { margin: 14px 0 2px; color: var(--plum); font-size: 19px; font-weight: 700; }
+        .product-price span { margin-left: 5px; color: var(--muted); font-size: 9px; font-weight: 400; }
+        .price-source { display: inline-block; margin-bottom: 3px; color: #766875; font-size: 9px; text-decoration: underline; }
         .product-bottom { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-top: 18px; padding-top: 15px; border-top: 1px solid #eee8e2; }
         .product-order-actions { min-width: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
         .add-to-cart {
@@ -505,11 +471,12 @@
             .filter-button { padding: 8px 11px; font-size: 10px; }
             .product-grid { gap: 11px; }
             .product-art { height: 180px; }
-            .bottle { transform: scale(.83); }
             .product-info { padding: 14px 12px 12px; }
             .product-info h3 { font-size: 21px; }
             .product-meta { font-size: 8px; letter-spacing: .1em; }
             .product-notes { min-height: 54px; font-size: 11px; }
+            .product-price { margin-top: 10px; font-size: 17px; }
+            .price-source { font-size: 8px; }
             .product-bottom { align-items: stretch; flex-direction: column; gap: 11px; }
             .product-order-actions { justify-content: space-between; gap: 6px; }
             .add-to-cart { min-height: 33px; padding-inline: 10px; font-size: 9px; }
@@ -635,123 +602,142 @@
                 </div>
                 <p class="reaction-summary" id="reaction-summary" aria-live="polite">Your likes: <strong>0</strong> · Dislikes: <strong>0</strong></p>
             </div>
+            <p class="catalog-price-note">Retailer reference prices checked 17 Nov 2026 and converted at US$1 = K20.580374 (about K20.58). These are not confirmed GioEquinox prices; shipping, taxes and import duties are excluded. Please confirm local price, availability and product details with us before ordering. <a href="https://www.exchangerate-api.com/" target="_blank" rel="noopener noreferrer">Rate source ↗</a></p>
             <div class="product-grid" id="product-grid">
-                <article class="product-card" data-category="amber woody" data-product="Solar No. 01">
+                <article class="product-card" data-category="floral amber" data-product="Chanel No. 5" data-price="3684" data-usd-price="179">
                     <div class="product-art" style="--art-bg:linear-gradient(145deg,#d9ba94,#987564);--bottle:#805341">
+                        <img class="product-photo" src="assets/images/perfume-chanel-no5.jpg" alt="Chanel No. 5 perfume bottle" loading="lazy" decoding="async">
                         <div class="bottle"><div class="bottle-label"><strong>SOLAR<br>NO. 01</strong><small>EAU DE PARFUM</small></div></div>
                     </div>
                     <div class="product-info">
-                        <div class="product-meta"><span>Warm · Unisex</span><span>01</span></div>
-                        <h3>Solar No. 01</h3>
-                        <p class="product-notes">Golden amber, soft vanilla and a quiet trace of sandalwood.</p>
+                        <div class="product-meta"><span>Floral · Aldehydic</span><span>01</span></div>
+                        <h3>Chanel No. 5</h3>
+                        <p class="product-notes">A luminous floral bouquet of rose and jasmine with a warm, refined finish. Eau de Parfum · 100 ml.</p>
+                        <p class="product-price">K3,684 <span>reference</span></p>
+                        <a class="price-source" href="https://www.walmart.com/search?q=Chanel+No.+5+3.4+oz+perfume" target="_blank" rel="noopener noreferrer">Walmart listing · US$179 ↗</a>
                         <div class="product-bottom">
                             <div class="product-order-actions">
                                 <button class="add-to-cart" type="button" data-add-to-cart>Add to cart</button>
-                                <a class="enquire-link" href="https://wa.me/260777907071?text=Hello%20GioEquinox%2C%20I%20would%20like%20to%20enquire%20about%20Solar%20No.%2001." target="_blank" rel="noopener noreferrer">Enquire on WhatsApp ↗</a>
+                                <a class="enquire-link" href="https://wa.me/260777907071?text=Hello%20GioEquinox%2C%20I%20would%20like%20to%20enquire%20about%20Chanel%20No.%205." target="_blank" rel="noopener noreferrer">Enquire on WhatsApp ↗</a>
                             </div>
-                            <div class="reaction-controls" role="group" aria-label="Rate Solar No. 01">
-                                <button class="reaction-button" type="button" data-reaction="like" aria-label="Like Solar No. 01" aria-pressed="false">♡</button>
-                                <button class="reaction-button" type="button" data-reaction="dislike" aria-label="Dislike Solar No. 01" aria-pressed="false">×</button>
+                            <div class="reaction-controls" role="group" aria-label="Rate Chanel No. 5">
+                                <button class="reaction-button" type="button" data-reaction="like" aria-label="Like Chanel No. 5" aria-pressed="false">♡</button>
+                                <button class="reaction-button" type="button" data-reaction="dislike" aria-label="Dislike Chanel No. 5" aria-pressed="false">×</button>
                             </div>
                         </div>
                     </div>
                 </article>
-                <article class="product-card" data-category="floral" data-product="Velvet Dusk">
+                <article class="product-card" data-category="floral woody" data-product="Chanel Coco Mademoiselle" data-price="2449" data-usd-price="119">
                     <div class="product-art" style="--art-bg:linear-gradient(145deg,#dfcbd4,#9d7d91);--bottle:#806073">
+                        <img class="product-photo" src="assets/images/perfume-coco-mademoiselle.jpg" alt="Chanel Coco Mademoiselle perfume bottle" loading="lazy" decoding="async">
                         <div class="bottle"><div class="bottle-label"><strong>VELVET<br>DUSK</strong><small>EAU DE PARFUM</small></div></div>
                     </div>
                     <div class="product-info">
-                        <div class="product-meta"><span>Floral · Soft</span><span>02</span></div>
-                        <h3>Velvet Dusk</h3>
-                        <p class="product-notes">A graceful bouquet of rose petals, peony and creamy musk.</p>
+                        <div class="product-meta"><span>Floral · Woody</span><span>02</span></div>
+                        <h3>Chanel Coco Mademoiselle</h3>
+                        <p class="product-notes">Fresh citrus and rose meet a polished patchouli base. Eau de Parfum · 50 ml.</p>
+                        <p class="product-price">K2,449 <span>reference</span></p>
+                        <a class="price-source" href="https://www.walmart.com/search?q=Chanel+Coco+Mademoiselle+1.7+oz" target="_blank" rel="noopener noreferrer">Walmart listing · US$119 ↗</a>
                         <div class="product-bottom">
                             <div class="product-order-actions">
                                 <button class="add-to-cart" type="button" data-add-to-cart>Add to cart</button>
-                                <a class="enquire-link" href="https://wa.me/260777907071?text=Hello%20GioEquinox%2C%20I%20would%20like%20to%20enquire%20about%20Velvet%20Dusk." target="_blank" rel="noopener noreferrer">Enquire on WhatsApp ↗</a>
+                                <a class="enquire-link" href="https://wa.me/260777907071?text=Hello%20GioEquinox%2C%20I%20would%20like%20to%20enquire%20about%20Chanel%20Coco%20Mademoiselle." target="_blank" rel="noopener noreferrer">Enquire on WhatsApp ↗</a>
                             </div>
-                            <div class="reaction-controls" role="group" aria-label="Rate Velvet Dusk">
-                                <button class="reaction-button" type="button" data-reaction="like" aria-label="Like Velvet Dusk" aria-pressed="false">♡</button>
-                                <button class="reaction-button" type="button" data-reaction="dislike" aria-label="Dislike Velvet Dusk" aria-pressed="false">×</button>
+                            <div class="reaction-controls" role="group" aria-label="Rate Chanel Coco Mademoiselle">
+                                <button class="reaction-button" type="button" data-reaction="like" aria-label="Like Chanel Coco Mademoiselle" aria-pressed="false">♡</button>
+                                <button class="reaction-button" type="button" data-reaction="dislike" aria-label="Dislike Chanel Coco Mademoiselle" aria-pressed="false">×</button>
                             </div>
                         </div>
                     </div>
                 </article>
-                <article class="product-card" data-category="fresh" data-product="Equinox Air">
+                <article class="product-card" data-category="amber woody" data-product="Chanel Coco Noir" data-price="3393" data-usd-price="164.89">
                     <div class="product-art" style="--art-bg:linear-gradient(145deg,#c8d8d1,#698f8a);--bottle:#547c76">
+                        <img class="product-photo" src="assets/images/perfume-coco-noir.jpg" alt="Chanel Coco Noir perfume bottle" loading="lazy" decoding="async">
                         <div class="bottle"><div class="bottle-label"><strong>EQUINOX<br>AIR</strong><small>EAU DE PARFUM</small></div></div>
                     </div>
                     <div class="product-info">
-                        <div class="product-meta"><span>Fresh · Bright</span><span>03</span></div>
-                        <h3>Equinox Air</h3>
-                        <p class="product-notes">Crisp bergamot and green tea open into a clean, airy finish.</p>
+                        <div class="product-meta"><span>Amber · Woody</span><span>03</span></div>
+                        <h3>Chanel Coco Noir</h3>
+                        <p class="product-notes">A dark, elegant blend of citrus, rose and patchouli. Eau de Parfum · 100 ml.</p>
+                        <p class="product-price">K3,393 <span>reference</span></p>
+                        <a class="price-source" href="https://www.walmart.com/search?q=Chanel+Coco+Noir+3.4+oz" target="_blank" rel="noopener noreferrer">Walmart listing · US$164.89 ↗</a>
                         <div class="product-bottom">
                             <div class="product-order-actions">
                                 <button class="add-to-cart" type="button" data-add-to-cart>Add to cart</button>
-                                <a class="enquire-link" href="https://wa.me/260777907071?text=Hello%20GioEquinox%2C%20I%20would%20like%20to%20enquire%20about%20Equinox%20Air." target="_blank" rel="noopener noreferrer">Enquire on WhatsApp ↗</a>
+                                <a class="enquire-link" href="https://wa.me/260777907071?text=Hello%20GioEquinox%2C%20I%20would%20like%20to%20enquire%20about%20Chanel%20Coco%20Noir." target="_blank" rel="noopener noreferrer">Enquire on WhatsApp ↗</a>
                             </div>
-                            <div class="reaction-controls" role="group" aria-label="Rate Equinox Air">
-                                <button class="reaction-button" type="button" data-reaction="like" aria-label="Like Equinox Air" aria-pressed="false">♡</button>
-                                <button class="reaction-button" type="button" data-reaction="dislike" aria-label="Dislike Equinox Air" aria-pressed="false">×</button>
+                            <div class="reaction-controls" role="group" aria-label="Rate Chanel Coco Noir">
+                                <button class="reaction-button" type="button" data-reaction="like" aria-label="Like Chanel Coco Noir" aria-pressed="false">♡</button>
+                                <button class="reaction-button" type="button" data-reaction="dislike" aria-label="Dislike Chanel Coco Noir" aria-pressed="false">×</button>
                             </div>
                         </div>
                     </div>
                 </article>
-                <article class="product-card" data-category="woody amber" data-product="Midnight Santal">
+                <article class="product-card" data-category="fresh woody amber" data-product="Versace Eros" data-price="1132" data-usd-price="54.99">
                     <div class="product-art" style="--art-bg:linear-gradient(145deg,#c4b8aa,#72615b);--bottle:#594941">
+                        <img class="product-photo" src="assets/images/perfume-versace-eros.jpg" alt="Versace Eros perfume bottle" loading="lazy" decoding="async">
                         <div class="bottle"><div class="bottle-label"><strong>MIDNIGHT<br>SANTAL</strong><small>EAU DE PARFUM</small></div></div>
                     </div>
                     <div class="product-info">
-                        <div class="product-meta"><span>Woody · Deep</span><span>04</span></div>
-                        <h3>Midnight Santal</h3>
-                        <p class="product-notes">Velvety sandalwood, smoky cedar and a touch of spice.</p>
+                        <div class="product-meta"><span>Fresh · Aromatic</span><span>04</span></div>
+                        <h3>Versace Eros</h3>
+                        <p class="product-notes">Mint and crisp apple meet warm woods and vanilla. Eau de Toilette · 100 ml.</p>
+                        <p class="product-price">K1,132 <span>reference</span></p>
+                        <a class="price-source" href="https://www.walmart.com/search?q=Versace+Eros+EDT+3.4+oz" target="_blank" rel="noopener noreferrer">Walmart listing · US$54.99 ↗</a>
                         <div class="product-bottom">
                             <div class="product-order-actions">
                                 <button class="add-to-cart" type="button" data-add-to-cart>Add to cart</button>
-                                <a class="enquire-link" href="https://wa.me/260777907071?text=Hello%20GioEquinox%2C%20I%20would%20like%20to%20enquire%20about%20Midnight%20Santal." target="_blank" rel="noopener noreferrer">Enquire on WhatsApp ↗</a>
+                                <a class="enquire-link" href="https://wa.me/260777907071?text=Hello%20GioEquinox%2C%20I%20would%20like%20to%20enquire%20about%20Versace%20Eros." target="_blank" rel="noopener noreferrer">Enquire on WhatsApp ↗</a>
                             </div>
-                            <div class="reaction-controls" role="group" aria-label="Rate Midnight Santal">
-                                <button class="reaction-button" type="button" data-reaction="like" aria-label="Like Midnight Santal" aria-pressed="false">♡</button>
-                                <button class="reaction-button" type="button" data-reaction="dislike" aria-label="Dislike Midnight Santal" aria-pressed="false">×</button>
+                            <div class="reaction-controls" role="group" aria-label="Rate Versace Eros">
+                                <button class="reaction-button" type="button" data-reaction="like" aria-label="Like Versace Eros" aria-pressed="false">♡</button>
+                                <button class="reaction-button" type="button" data-reaction="dislike" aria-label="Dislike Versace Eros" aria-pressed="false">×</button>
                             </div>
                         </div>
                     </div>
                 </article>
-                <article class="product-card" data-category="floral amber" data-product="Bloom Eclipse">
+                <article class="product-card" data-category="floral fresh" data-product="Marc Jacobs Daisy" data-price="1105" data-usd-price="53.68">
                     <div class="product-art" style="--art-bg:linear-gradient(145deg,#e4cbb0,#b47f70);--bottle:#9d6658">
+                        <img class="product-photo" src="assets/images/perfume-marc-jacobs-daisy.jpg" alt="Marc Jacobs Daisy perfume bottle" loading="lazy" decoding="async">
                         <div class="bottle"><div class="bottle-label"><strong>BLOOM<br>ECLIPSE</strong><small>EAU DE PARFUM</small></div></div>
                     </div>
                     <div class="product-info">
-                        <div class="product-meta"><span>Floral · Luminous</span><span>05</span></div>
-                        <h3>Bloom Eclipse</h3>
-                        <p class="product-notes">Jasmine and orange blossom warmed by amber and tonka.</p>
+                        <div class="product-meta"><span>Floral · Fresh</span><span>05</span></div>
+                        <h3>Marc Jacobs Daisy</h3>
+                        <p class="product-notes">A bright floral with wild berries, soft white blooms and a clean, woody finish. Eau de Toilette · 100 ml.</p>
+                        <p class="product-price">K1,105 <span>reference</span></p>
+                        <a class="price-source" href="https://www.walmart.com/search?q=Marc+Jacobs+Daisy+3.4+oz" target="_blank" rel="noopener noreferrer">Walmart listing · US$53.68 ↗</a>
                         <div class="product-bottom">
                             <div class="product-order-actions">
                                 <button class="add-to-cart" type="button" data-add-to-cart>Add to cart</button>
-                                <a class="enquire-link" href="https://wa.me/260777907071?text=Hello%20GioEquinox%2C%20I%20would%20like%20to%20enquire%20about%20Bloom%20Eclipse." target="_blank" rel="noopener noreferrer">Enquire on WhatsApp ↗</a>
+                                <a class="enquire-link" href="https://wa.me/260777907071?text=Hello%20GioEquinox%2C%20I%20would%20like%20to%20enquire%20about%20Marc%20Jacobs%20Daisy." target="_blank" rel="noopener noreferrer">Enquire on WhatsApp ↗</a>
                             </div>
-                            <div class="reaction-controls" role="group" aria-label="Rate Bloom Eclipse">
-                                <button class="reaction-button" type="button" data-reaction="like" aria-label="Like Bloom Eclipse" aria-pressed="false">♡</button>
-                                <button class="reaction-button" type="button" data-reaction="dislike" aria-label="Dislike Bloom Eclipse" aria-pressed="false">×</button>
+                            <div class="reaction-controls" role="group" aria-label="Rate Marc Jacobs Daisy">
+                                <button class="reaction-button" type="button" data-reaction="like" aria-label="Like Marc Jacobs Daisy" aria-pressed="false">♡</button>
+                                <button class="reaction-button" type="button" data-reaction="dislike" aria-label="Dislike Marc Jacobs Daisy" aria-pressed="false">×</button>
                             </div>
                         </div>
                     </div>
                 </article>
-                <article class="product-card" data-category="fresh woody" data-product="Blue Horizon">
+                <article class="product-card" data-category="fresh" data-product="Calvin Klein CK One" data-price="611" data-usd-price="29.67">
                     <div class="product-art" style="--art-bg:linear-gradient(145deg,#bbcbd5,#607c91);--bottle:#526b81">
+                        <img class="product-photo" src="assets/images/perfume-calvin-klein-ck-one.jpg" alt="Calvin Klein CK One perfume bottle" loading="lazy" decoding="async">
                         <div class="bottle"><div class="bottle-label"><strong>BLUE<br>HORIZON</strong><small>EAU DE PARFUM</small></div></div>
                     </div>
                     <div class="product-info">
-                        <div class="product-meta"><span>Fresh · Modern</span><span>06</span></div>
-                        <h3>Blue Horizon</h3>
-                        <p class="product-notes">Bright citrus, cool aromatics and smooth driftwood.</p>
+                        <div class="product-meta"><span>Fresh · Citrus</span><span>06</span></div>
+                        <h3>Calvin Klein CK One</h3>
+                        <p class="product-notes">An easy unisex blend of citrus, green tea and musk. Eau de Toilette · 200 ml.</p>
+                        <p class="product-price">K611 <span>reference</span></p>
+                        <a class="price-source" href="https://www.walmart.com/search?q=Calvin+Klein+CK+One+6.7+oz" target="_blank" rel="noopener noreferrer">Walmart listing · US$29.67 ↗</a>
                         <div class="product-bottom">
                             <div class="product-order-actions">
                                 <button class="add-to-cart" type="button" data-add-to-cart>Add to cart</button>
-                                <a class="enquire-link" href="https://wa.me/260777907071?text=Hello%20GioEquinox%2C%20I%20would%20like%20to%20enquire%20about%20Blue%20Horizon." target="_blank" rel="noopener noreferrer">Enquire on WhatsApp ↗</a>
+                                <a class="enquire-link" href="https://wa.me/260777907071?text=Hello%20GioEquinox%2C%20I%20would%20like%20to%20enquire%20about%20Calvin%20Klein%20CK%20One." target="_blank" rel="noopener noreferrer">Enquire on WhatsApp ↗</a>
                             </div>
-                            <div class="reaction-controls" role="group" aria-label="Rate Blue Horizon">
-                                <button class="reaction-button" type="button" data-reaction="like" aria-label="Like Blue Horizon" aria-pressed="false">♡</button>
-                                <button class="reaction-button" type="button" data-reaction="dislike" aria-label="Dislike Blue Horizon" aria-pressed="false">×</button>
+                            <div class="reaction-controls" role="group" aria-label="Rate Calvin Klein CK One">
+                                <button class="reaction-button" type="button" data-reaction="like" aria-label="Like Calvin Klein CK One" aria-pressed="false">♡</button>
+                                <button class="reaction-button" type="button" data-reaction="dislike" aria-label="Dislike Calvin Klein CK One" aria-pressed="false">×</button>
                             </div>
                         </div>
                     </div>
@@ -822,7 +808,7 @@
         </div>
         <div class="cart-items" id="cart-items"></div>
         <div class="cart-footer">
-            <p class="cart-footer-note">Prices and availability can be confirmed with our team when you enquire.</p>
+            <p class="cart-footer-note">Displayed amounts are online retailer references, not confirmed GioEquinox prices. Shipping, tax and import duties are excluded; ask us to confirm the current local price and availability.</p>
             <a class="button cart-checkout" id="cart-enquiry" aria-disabled="true" tabindex="-1">Enquire about your selection on WhatsApp</a>
         </div>
     </dialog>
@@ -834,7 +820,7 @@
             const legacyCartStorageKey = 'gioequinox-cart';
             const cartCategory = 'fragrance';
             const cards = [...document.querySelectorAll('.product-card')];
-            const productNames = new Set(cards.map(card => card.dataset.product));
+            const productPrices = new Map(cards.map(card => [`${cartCategory}:${card.dataset.product}`, Number(card.dataset.price)]));
             const summary = document.getElementById('reaction-summary');
             const toast = document.getElementById('reaction-toast');
             const cartDialog = document.getElementById('cart-dialog');
@@ -865,7 +851,10 @@
                             parsedCart[id] = {
                                 name: item.name,
                                 category: item.category,
-                                quantity: Math.min(item.quantity, 99)
+                                quantity: Math.min(item.quantity, 99),
+                                price: Number.isSafeInteger(item.price) && item.price >= 0
+                                    ? item.price
+                                    : productPrices.get(id) ?? null
                             };
                         }
                     });
@@ -926,12 +915,13 @@
                 if (legacyCart && typeof legacyCart === 'object' && !Array.isArray(legacyCart)) {
                     Object.entries(legacyCart).forEach(([name, item]) => {
                         const id = `${cartCategory}:${name}`;
-                        if (productNames.has(name) && !cart[id] &&
+                        if (!cart[id] &&
                             Number.isSafeInteger(item?.quantity) && item.quantity > 0) {
                             cart[id] = {
                                 name,
                                 category: cartCategory,
-                                quantity: Math.min(item.quantity, 99)
+                                quantity: Math.min(item.quantity, 99),
+                                price: productPrices.get(id) ?? null
                             };
                         }
                     });
@@ -962,7 +952,7 @@
                         <div>
                             <h3>${escapeHtml(item.name)}</h3>
                             <p>${item.category === 'fragrance' ? 'Fragrance' : 'Timepiece'}</p>
-                            <p>Price and availability confirmed by GioEquinox</p>
+                            <p>${item.price === null ? 'Reference price unavailable · please confirm' : `Retailer reference: K${item.price.toLocaleString('en-US')} each`}</p>
                         </div>
                         <div class="cart-item-actions" aria-label="Quantity for ${escapeHtml(item.name)}">
                             <button class="cart-action" type="button" data-cart-action="decrease" data-product="${escapeHtml(id)}" aria-label="Decrease ${escapeHtml(item.name)} quantity">−</button>
@@ -972,10 +962,11 @@
                         <button class="cart-item-remove" type="button" data-cart-action="remove" data-product="${escapeHtml(id)}">Remove</button>
                     </article>`).join('');
 
-                const orderDetails = entries.map(([, item]) =>
-                    `- ${item.category === 'fragrance' ? 'Fragrance' : 'Timepiece'}: ${item.name} x ${item.quantity}`
-                ).join('\n');
-                const body = encodeURIComponent(`Hello GioEquinox,\n\nI would like to enquire about:\n${orderDetails}\n\nPlease confirm the prices and availability.\n\nThank you.`);
+                const orderDetails = entries.map(([, item]) => {
+                    const reference = item.price === null ? 'price to confirm' : `reference K${item.price.toLocaleString('en-US')} each`;
+                    return `- ${item.category === 'fragrance' ? 'Fragrance' : 'Timepiece'}: ${item.name} x ${item.quantity} (${reference})`;
+                }).join('\n');
+                const body = encodeURIComponent(`Hello GioEquinox,\n\nI would like to enquire about:\n${orderDetails}\n\nThe listed amounts are online retailer references, not confirmed GioEquinox prices; shipping, taxes and import duties are excluded. Please confirm current local prices, availability and exact models.\n\nThank you.`);
                 cartEnquiry.href = `https://wa.me/260777907071?text=${body}`;
                 cartEnquiry.target = '_blank';
                 cartEnquiry.rel = 'noopener noreferrer';
@@ -993,7 +984,7 @@
                     notify(`You can add up to 99 of ${name}.`);
                     return;
                 }
-                cart[id] = { name, category: cartCategory, quantity: quantity + 1 };
+                cart[id] = { name, category: cartCategory, quantity: quantity + 1, price: Number(button.closest('.product-card').dataset.price) };
                 saveCart();
                 renderCart();
                 notify(`${name} added to your cart.`);
