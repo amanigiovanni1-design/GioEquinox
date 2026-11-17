@@ -17,6 +17,11 @@
             --plum-dark: #302333;
             --gold: #d39a55;
             --line: #e8e0d9;
+            --site-header-bg: rgb(247 243 237 / 96%);
+            --site-header-border: rgb(232 224 217 / 75%);
+            --site-header-text: #514a52;
+            --site-accent: var(--plum);
+            --site-count-text: #fff;
             --serif: Georgia, "Times New Roman", serif;
             --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
         }
@@ -529,9 +534,10 @@
             *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
         }
     </style>
+    <link rel="stylesheet" href="assets/site-header.css">
 </head>
 <body>
-    <div class="announcement">A new orbit of fragrance <span>— discover GioEquinox</span></div>
+    <div class="site-ribbon"><span class="site-ribbon-brand">GioEquinox</span><span class="site-ribbon-divider" aria-hidden="true">✦</span><span>Fragrance · Timepieces · Equinox Family</span><span class="site-ribbon-location">Munali Mall · Shop 32 · Lusaka</span></div>
     <header class="site-header">
         <nav class="nav shell" aria-label="Main navigation">
             <a class="brand" href="#home" aria-label="GioEquinox home">
@@ -559,12 +565,11 @@
                 <span class="brand-name">Gio<span>Equinox</span></span>
             </a>
             <div class="nav-links" id="primary-links">
-                <a href="#collection">Collection</a>
+                <a href="#collection" aria-current="page">Fragrance</a>
                 <a href="watches.html">Timepieces</a>
                 <a href="equinox-family.html">Equinox Family</a>
-                <a href="#story">Our world</a>
-                <a href="admin.html">Owner sign in</a>
-                <a class="nav-contact" href="#contact">Visit & contact</a>
+                <a href="#contact">Visit us</a>
+                <a class="nav-owner" href="admin.html">Owner portal</a>
             </div>
             <div class="header-actions">
                 <button class="cart-toggle" id="cart-toggle" type="button" aria-label="Open shopping cart, 0 items" aria-haspopup="dialog">
@@ -1143,29 +1148,12 @@
                 });
             });
 
-            const menuButton = document.querySelector('.menu-toggle');
-            const navigation = document.getElementById('primary-links');
-            menuButton.addEventListener('click', () => {
-                const open = menuButton.getAttribute('aria-expanded') !== 'true';
-                menuButton.setAttribute('aria-expanded', String(open));
-                menuButton.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-                menuButton.textContent = open ? '×' : '☰';
-                navigation.classList.toggle('is-open', open);
-            });
-            navigation.querySelectorAll('a').forEach(link => {
-                link.addEventListener('click', () => {
-                    menuButton.setAttribute('aria-expanded', 'false');
-                    menuButton.setAttribute('aria-label', 'Open menu');
-                    menuButton.textContent = '☰';
-                    navigation.classList.remove('is-open');
-                });
-            });
-
             document.getElementById('current-year').textContent = new Date().getFullYear();
             syncReactions();
             renderCart();
         })();
     </script>
+    <script src="assets/site-header.js"></script>
     <script src="assets/catalogue-config.js"></script>
     <script src="assets/catalogue-api.js"></script>
     <script src="assets/catalogue-products.js"></script>

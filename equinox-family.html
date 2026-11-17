@@ -17,6 +17,11 @@
             --plum-dark: #211b24;
             --gold: #d39a55;
             --line: #e8e0d9;
+            --site-header-bg: rgb(247 243 237 / 96%);
+            --site-header-border: rgb(232 224 217 / 75%);
+            --site-header-text: #514a52;
+            --site-accent: var(--plum);
+            --site-count-text: #fff;
             --serif: Georgia, "Times New Roman", serif;
             --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
         }
@@ -144,10 +149,11 @@
             *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
         }
     </style>
+    <link rel="stylesheet" href="assets/site-header.css">
 </head>
 <body>
-    <div class="topline">A closer connection to the things you love <span>· GioEquinox</span></div>
-    <header class="header">
+    <div class="site-ribbon"><span class="site-ribbon-brand">GioEquinox</span><span class="site-ribbon-divider" aria-hidden="true">✦</span><span>Fragrance · Timepieces · Equinox Family</span><span class="site-ribbon-location">Munali Mall · Shop 32 · Lusaka</span></div>
+    <header class="site-header">
         <nav class="nav shell" aria-label="Main navigation">
             <a class="brand" href="equinox.html" aria-label="GioEquinox home">
                 <svg class="brand-mark" viewBox="0 0 100 100" role="img" aria-label="Lunar eclipse logo">
@@ -159,10 +165,15 @@
                 </svg>
                 <span class="brand-name">Gio<span>Equinox</span></span>
             </a>
-            <div class="nav-links">
+            <div class="nav-links" id="primary-links">
                 <a href="equinox.html">Fragrance</a>
                 <a href="watches.html">Timepieces</a>
-                <a href="#join" class="join-link" aria-current="page">Equinox Family</a>
+                <a href="#join" aria-current="page">Equinox Family</a>
+                <a href="equinox.html#contact">Visit us</a>
+                <a class="nav-owner" href="admin.html">Owner portal</a>
+            </div>
+            <div class="header-actions">
+                <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="primary-links">☰</button>
             </div>
         </nav>
     </header>
@@ -313,5 +324,6 @@
             document.getElementById('current-year').textContent = new Date().getFullYear();
         })();
     </script>
+    <script src="assets/site-header.js"></script>
 </body>
 </html>

@@ -6,16 +6,14 @@
     <meta name="theme-color" content="#17201a">
     <title>Owner catalogue · GioEquinox</title>
     <style>
-        :root { color-scheme: dark; --bg: #17201a; --panel: #202a23; --line: #3b473d; --text: #f3efe4; --muted: #b7b9ac; --accent: #c9a56a; --error: #f19b8b; --success: #a9d5a5; }
+        :root { color-scheme: dark; --bg: #17201a; --panel: #202a23; --line: #3b473d; --text: #f3efe4; --muted: #b7b9ac; --accent: #c9a56a; --error: #f19b8b; --success: #a9d5a5; --site-header-bg: rgb(23 32 26 / 96%); --site-header-border: var(--line); --site-header-text: #d3d0c4; --site-accent: var(--accent); --site-count-text: #17201a; --sans: Arial, sans-serif; }
         * { box-sizing: border-box; }
         body { margin: 0; min-height: 100vh; background: var(--bg); color: var(--text); font: 15px/1.6 Georgia, "Times New Roman", serif; }
         a { color: var(--accent); }
         .shell { width: min(100% - 36px, 920px); margin: 0 auto; }
-        header { padding: 22px 0; border-bottom: 1px solid var(--line); }
-        .header-inner { display: flex; justify-content: space-between; align-items: center; gap: 20px; }
-        .brand { color: var(--text); font-size: 19px; letter-spacing: .08em; text-decoration: none; }
-        .brand span { color: var(--accent); }
-        nav { display: flex; gap: 18px; font: 12px/1.4 Arial, sans-serif; }
+        .site-header .brand { display: inline-flex; align-items: center; gap: 10px; color: var(--text); font-family: Georgia, "Times New Roman", serif; font-size: 21px; letter-spacing: -.04em; text-decoration: none; }
+        .site-header .brand-mark { width: 40px; height: 40px; flex: none; }
+        .site-header .brand-name span { color: var(--accent); }
         main { padding: 48px 0 72px; }
         .eyebrow { color: var(--accent); font: 11px/1.4 Arial, sans-serif; letter-spacing: .17em; text-transform: uppercase; }
         h1, h2, h3 { font-weight: 400; line-height: 1.2; }
@@ -49,8 +47,6 @@
         .product-status-button[data-active="false"] { border-color: var(--success); color: var(--success); }
         [hidden] { display: none !important; }
         @media (max-width: 640px) {
-            .header-inner { align-items: flex-start; flex-direction: column; }
-            nav { flex-wrap: wrap; }
             .form-grid { grid-template-columns: 1fr; }
             .product-row { grid-template-columns: 52px 1fr auto; gap: 10px; }
             .product-row img { width: 52px; height: 52px; }
@@ -58,17 +54,31 @@
             .product-status-button { grid-column: 2 / -1; justify-self: start; }
         }
     </style>
+    <link rel="stylesheet" href="assets/site-header.css">
 </head>
 <body>
-    <header>
-        <div class="shell header-inner">
-            <a class="brand" href="index.html">Gio<span>Equinox</span></a>
-            <nav aria-label="Catalogue navigation">
-                <a href="equinox.html">Fragrances</a>
+    <div class="site-ribbon"><span class="site-ribbon-brand">GioEquinox</span><span class="site-ribbon-divider" aria-hidden="true">✦</span><span>Fragrance · Timepieces · Equinox Family</span><span class="site-ribbon-location">Munali Mall · Shop 32 · Lusaka</span></div>
+    <header class="site-header">
+        <nav class="nav shell" aria-label="Main navigation">
+            <a class="brand" href="equinox.html" aria-label="GioEquinox home">
+                <svg class="brand-mark" viewBox="0 0 100 100" role="img" aria-label="Lunar eclipse logo">
+                    <circle cx="50" cy="53" r="36" fill="#d9864d"/>
+                    <circle cx="50" cy="43" r="35" fill="#29252d"/>
+                    <path d="M20 39c7-21 25-32 44-27-8 2-12 9-17 11-7 3-10-2-16 4-4 4-4 9-11 12Z" fill="#746772" opacity=".55"/>
+                </svg>
+                <span class="brand-name">Gio<span>Equinox</span></span>
+            </a>
+            <div class="nav-links" id="primary-links">
+                <a href="equinox.html">Fragrance</a>
                 <a href="watches.html">Timepieces</a>
-                <a href="index.html">Store home</a>
-            </nav>
-        </div>
+                <a href="equinox-family.html">Equinox Family</a>
+                <a href="equinox.html#contact">Visit us</a>
+                <a class="nav-owner" href="admin.html" aria-current="page">Owner portal</a>
+            </div>
+            <div class="header-actions">
+                <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="primary-links">☰</button>
+            </div>
+        </nav>
     </header>
     <main class="shell">
         <p class="eyebrow">Owner tools</p>
@@ -128,8 +138,9 @@
             <button type="button" class="secondary-button" id="sign-out">Sign out</button>
         </section>
     </main>
-    <script src="assets/catalogue-config.js"></script>
-    <script src="assets/catalogue-api.js"></script>
-    <script src="assets/catalogue-admin.js"></script>
+    <script src="assets/site-header.js"></script>
+    <script src="assets/catalogue-config.js?v=7f32a4b"></script>
+    <script src="assets/catalogue-api.js?v=48bad46"></script>
+    <script src="assets/catalogue-admin.js?v=48bad46"></script>
 </body>
 </html>
