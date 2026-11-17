@@ -59,6 +59,12 @@
         .benefits { display: grid; gap: 13px; margin: 28px 0 0; padding: 0; list-style: none; }
         .benefits li { display: flex; align-items: center; gap: 10px; color: #5f5760; font-size: 11px; }
         .benefits li::before { width: 19px; height: 19px; display: grid; place-items: center; border: 1px solid #cfc0cf; border-radius: 50%; color: var(--plum); content: "✓"; font-size: 10px; }
+        .updates-space { margin-top: 30px; padding: 19px 21px; border-left: 2px solid var(--gold); background: #efe8e0; }
+        .updates-space h3 { margin: 0 0 9px; color: #8d6a49; font-size: 9px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; }
+        .updates-space blockquote { margin: 0; color: var(--plum); font-family: var(--serif); font-size: 18px; line-height: 1.55; }
+        .updates-space blockquote::before, .updates-space blockquote::after { color: var(--gold); }
+        .updates-space blockquote::before { content: "“"; }
+        .updates-space blockquote::after { content: "”"; }
         .form-card { padding: clamp(23px, 4vw, 40px); border: 1px solid var(--line); border-radius: 9px; background: var(--white); box-shadow: 0 18px 55px rgb(46 32 45 / 6%); }
         .form-heading { margin-bottom: 24px; }
         .form-heading h2 { margin: 0 0 7px; font-family: var(--serif); font-size: 30px; font-weight: 400; letter-spacing: -.03em; }
@@ -180,6 +186,10 @@
                     <li>Connect directly with our team</li>
                     <li>Choose how we contact you</li>
                 </ul>
+                <aside class="updates-space" aria-labelledby="updates-title">
+                    <h3 id="updates-title">A note for the family</h3>
+                    <blockquote><em>Stay tuned for the latest updates on collections, just for you</em></blockquote>
+                </aside>
             </div>
             <div class="form-card">
                 <form id="family-form">
