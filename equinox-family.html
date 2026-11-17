@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#19161b">
+    <meta name="description" content="Join the GioEquinox Family for fragrance and timepiece updates, new arrivals, and a more personal connection with our store.">
+    <title>Equinox Family | GioEquinox</title>
+    <style>
+        :root {
+            color-scheme: light;
+            --ink: #211d22;
+            --muted: #746d76;
+            --paper: #f7f3ed;
+            --white: #fffdfa;
+            --plum: #4a3048;
+            --plum-dark: #211b24;
+            --gold: #d39a55;
+            --line: #e8e0d9;
+            --serif: Georgia, "Times New Roman", serif;
+            --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { min-height: 100vh; display: flex; flex-direction: column; margin: 0; background: var(--paper); color: var(--ink); font-family: var(--sans); -webkit-font-smoothing: antialiased; }
+        a { color: inherit; }
+        button, input { font: inherit; }
+        .shell { width: min(1120px, calc(100% - 48px)); margin-inline: auto; }
+        .topline { padding: 9px 16px; background: var(--plum-dark); color: #e8dfd3; font-size: 9px; letter-spacing: .19em; text-align: center; text-transform: uppercase; }
+        .topline span { color: #e8bd80; }
+        .header { border-bottom: 1px solid var(--line); background: var(--paper); }
+        .nav { min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+        .brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
+        .brand-mark { width: 41px; height: 41px; }
+        .brand-name { font-family: var(--serif); font-size: 21px; letter-spacing: -.04em; }
+        .brand-name span { color: var(--gold); }
+        .nav-links { display: flex; flex-wrap: wrap; align-items: center; gap: 24px; }
+        .nav-links a { color: #5e565f; font-size: 11px; text-decoration: none; }
+        .nav-links a:hover { color: var(--plum); }
+        .nav-links .join-link { padding: 10px 15px; border: 1px solid #c8b9c3; border-radius: 999px; color: var(--plum); }
+        .nav-links .join-link:hover { border-color: var(--plum); }
+        main { flex: 1; }
+        .family-hero { position: relative; overflow: hidden; background: var(--plum-dark); color: #fffaf3; }
+        .family-hero::before, .family-hero::after { position: absolute; top: -310px; right: 7%; width: 630px; height: 630px; border: 1px solid rgb(231 197 153 / 18%); border-radius: 50%; content: ""; pointer-events: none; }
+        .family-hero::after { top: -260px; right: 11%; width: 530px; height: 530px; border-color: rgb(231 197 153 / 11%); }
+        .hero-content { position: relative; z-index: 1; width: min(1120px, calc(100% - 48px)); margin-inline: auto; padding-block: 74px 95px; }
+        .eyebrow { display: flex; align-items: center; gap: 10px; color: #e4bb83; font-size: 9px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; }
+        .eyebrow::before { width: 27px; height: 1px; background: currentColor; content: ""; }
+        .hero-content h1 { max-width: 700px; margin: 19px 0 15px; font-family: var(--serif); font-size: clamp(52px, 8vw, 84px); font-weight: 400; letter-spacing: -.055em; line-height: .98; }
+        .hero-content h1 em { color: #e2b77f; font-weight: 400; }
+        .hero-copy { max-width: 500px; margin: 0; color: #d1c7d0; font-size: 13px; line-height: 1.8; }
+        .hero-note { display: inline-flex; align-items: center; gap: 9px; margin-top: 24px; color: #e4d7c6; font-size: 10px; letter-spacing: .04em; }
+        .hero-note::before { color: var(--gold); content: "✦"; }
+        .main-content { display: grid; grid-template-columns: minmax(0, .85fr) minmax(380px, 1.15fr); gap: clamp(32px, 7vw, 86px); align-items: start; padding-block: 65px 84px; }
+        .intro { position: sticky; top: 28px; padding-top: 20px; }
+        .intro .eyebrow { color: #98734f; }
+        .intro h2 { margin: 13px 0; font-family: var(--serif); font-size: clamp(34px, 4vw, 49px); font-weight: 400; letter-spacing: -.045em; line-height: 1.07; }
+        .intro > p { max-width: 390px; margin: 0; color: var(--muted); font-size: 12px; line-height: 1.9; }
+        .benefits { display: grid; gap: 13px; margin: 28px 0 0; padding: 0; list-style: none; }
+        .benefits li { display: flex; align-items: center; gap: 10px; color: #5f5760; font-size: 11px; }
+        .benefits li::before { width: 19px; height: 19px; display: grid; place-items: center; border: 1px solid #cfc0cf; border-radius: 50%; color: var(--plum); content: "✓"; font-size: 10px; }
+        .form-card { padding: clamp(23px, 4vw, 40px); border: 1px solid var(--line); border-radius: 9px; background: var(--white); box-shadow: 0 18px 55px rgb(46 32 45 / 6%); }
+        .form-heading { margin-bottom: 24px; }
+        .form-heading h2 { margin: 0 0 7px; font-family: var(--serif); font-size: 30px; font-weight: 400; letter-spacing: -.03em; }
+        .form-heading p { margin: 0; color: var(--muted); font-size: 11px; line-height: 1.6; }
+        .field-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 17px 14px; }
+        .field { min-width: 0; display: grid; gap: 7px; }
+        .field-full { grid-column: 1 / -1; }
+        .field label { color: #453e47; font-size: 10px; font-weight: 700; }
+        .field label span { color: #a64e4e; }
+        .field input {
+            width: 100%; min-height: 45px; padding: 0 12px; border: 1px solid #ddd4cc; border-radius: 4px;
+            background: #fffefa; color: var(--ink); font-size: 12px; transition: border-color .2s ease, box-shadow .2s ease;
+        }
+        .field input::placeholder { color: #aaa1a8; }
+        .field input:focus { outline: none; border-color: #896f86; box-shadow: 0 0 0 3px rgb(74 48 72 / 9%); }
+        .field-hint { color: var(--muted); font-size: 9px; line-height: 1.5; }
+        .consent-row { display: grid; grid-template-columns: 17px 1fr; gap: 10px; align-items: start; margin-top: 21px; }
+        .consent-row input { width: 16px; height: 16px; margin: 1px 0 0; accent-color: var(--plum); }
+        .consent-row label { color: #625a62; font-size: 10px; line-height: 1.65; }
+        .consent-row a { color: var(--plum); }
+        .privacy-note { margin: 13px 0 0; color: #827984; font-size: 9px; line-height: 1.6; }
+        .submit-button { width: 100%; min-height: 48px; display: inline-flex; align-items: center; justify-content: center; gap: 10px; margin-top: 19px; border: 0; border-radius: 999px; background: var(--plum); color: white; font-size: 11px; font-weight: 700; cursor: pointer; transition: transform .2s ease, background .2s ease; }
+        .submit-button:hover { transform: translateY(-1px); background: #5b3c58; }
+        .submit-button:disabled { cursor: wait; opacity: .7; }
+        .submit-button:focus-visible, .nav a:focus-visible, .whatsapp-fallback:focus-visible { outline: 3px solid #d5a367; outline-offset: 3px; }
+        .form-error { margin: 12px 0 0; color: #9f3535; font-size: 11px; }
+        .confirmation { display: grid; justify-items: center; padding: 16px 3px 4px; text-align: center; }
+        .confirmation[hidden] { display: none; }
+        .confirmation-logo { width: 105px; height: 105px; margin-bottom: 19px; animation: eclipse-arrive 1.1s cubic-bezier(.16,.84,.35,1) both; }
+        .confirmation-logo .sun { transform-box: fill-box; transform-origin: center; animation: sunrise 1.4s cubic-bezier(.18,.75,.2,1) both; }
+        .confirmation-logo .moon { transform-box: fill-box; transform-origin: center; animation: moon-glide 1s .1s cubic-bezier(.15,.82,.22,1) both; }
+        @keyframes eclipse-arrive { from { opacity: 0; transform: scale(.65) rotate(-35deg); } to { opacity: 1; transform: scale(1) rotate(0); } }
+        @keyframes sunrise { from { transform: translateY(17px); opacity: .35; } to { transform: translateY(0); opacity: 1; } }
+        @keyframes moon-glide { from { transform: translateY(-12px); } to { transform: translateY(0); } }
+        .confirmation h2 { margin: 0 0 10px; font-family: var(--serif); font-size: 34px; font-weight: 400; }
+        .confirmation > p { max-width: 360px; margin: 0; color: var(--muted); font-size: 11px; line-height: 1.8; }
+        .confirmation-step { margin: 17px 0 !important; color: var(--plum) !important; font-weight: 700; }
+        .whatsapp-fallback { min-height: 44px; display: inline-flex; align-items: center; justify-content: center; margin-top: 7px; padding: 0 20px; border-radius: 999px; background: #287c54; color: white; font-size: 10px; font-weight: 700; text-decoration: none; }
+        .whatsapp-fallback:hover { background: #206946; }
+        .edit-link { display: inline-block; margin-top: 17px; color: var(--plum); font-size: 10px; text-decoration: underline; }
+        .footer { padding: 22px 0; border-top: 1px solid var(--line); color: var(--muted); font-size: 9px; }
+        .footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 18px; }
+        .footer a { color: var(--plum); text-decoration: none; }
+        @media (max-width: 760px) {
+            .shell, .hero-content { width: min(100% - 36px, 1120px); }
+            .nav { min-height: 68px; flex-wrap: wrap; padding-block: 10px; }
+            .brand-mark { width: 36px; height: 36px; }
+            .brand-name { font-size: 19px; }
+            .nav-links { justify-content: end; gap: 10px 16px; }
+            .nav-links a { font-size: 10px; }
+            .nav-links .join-link { padding: 8px 11px; }
+            .hero-content { padding-block: 57px 67px; }
+            .family-hero::before { right: -310px; }
+            .family-hero::after { right: -240px; }
+            .main-content { grid-template-columns: 1fr; gap: 30px; padding-block: 38px 58px; }
+            .intro { position: static; padding-top: 0; }
+            .intro h2 { max-width: 480px; }
+            .benefits { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 11px; margin-top: 19px; }
+        }
+        @media (max-width: 500px) {
+            .shell, .hero-content { width: min(100% - 30px, 1120px); }
+            .nav { align-items: center; }
+            .nav-links { width: 100%; justify-content: space-between; gap: 6px; padding-top: 5px; }
+            .nav-links a { font-size: 9px; }
+            .nav-links .join-link { padding: 7px 9px; }
+            .topline { font-size: 8px; letter-spacing: .13em; }
+            .hero-content h1 { font-size: clamp(49px, 14vw, 68px); }
+            .hero-copy { font-size: 12px; }
+            .main-content { padding-top: 32px; }
+            .benefits { grid-template-columns: 1fr; }
+            .form-card { padding: 22px 17px; }
+            .field-grid { grid-template-columns: 1fr; gap: 14px; }
+            .field-full { grid-column: auto; }
+            .footer-inner { align-items: start; flex-direction: column; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
+        }
+    </style>
+</head>
+<body>
+    <div class="topline">A closer connection to the things you love <span>· GioEquinox</span></div>
+    <header class="header">
+        <nav class="nav shell" aria-label="Main navigation">
+            <a class="brand" href="equinox.html" aria-label="GioEquinox home">
+                <svg class="brand-mark" viewBox="0 0 100 100" role="img" aria-label="Lunar eclipse logo">
+                    <circle cx="50" cy="53" r="36" fill="#d9864d"/>
+                    <circle cx="50" cy="43" r="35" fill="#29252d"/>
+                    <path d="M20 39c7-21 25-32 44-27-8 2-12 9-17 11-7 3-10-2-16 4-4 4-4 9-11 12Z" fill="#746772" opacity=".55"/>
+                    <ellipse cx="36" cy="34" rx="5" ry="3.3" fill="#17161b" opacity=".7"/>
+                    <ellipse cx="65" cy="45" rx="5.6" ry="3.8" fill="#17161b" opacity=".65"/>
+                </svg>
+                <span class="brand-name">Gio<span>Equinox</span></span>
+            </a>
+            <div class="nav-links">
+                <a href="equinox.html">Fragrance</a>
+                <a href="watches.html">Timepieces</a>
+                <a href="#join" class="join-link" aria-current="page">Equinox Family</a>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <section class="family-hero">
+            <div class="hero-content">
+                <div class="eyebrow">A little closer to GioEquinox</div>
+                <h1>Welcome to the<br><em>Equinox Family.</em></h1>
+                <p class="hero-copy">Join our circle for thoughtful updates on new arrivals, fragrances, and timepieces — with a personal connection to our store.</p>
+                <div class="hero-note">A simple hello can be the start of something lovely.</div>
+            </div>
+        </section>
+        <section class="main-content shell" id="join">
+            <div class="intro">
+                <div class="eyebrow">Your place in our orbit</div>
+                <h2>Stay in the know. Stay in touch.</h2>
+                <p>Share a few details to introduce yourself. We’ll open WhatsApp with your registration ready to send to GioEquinox.</p>
+                <ul class="benefits">
+                    <li>Hear about new arrivals</li>
+                    <li>Discover fragrance and timepieces</li>
+                    <li>Connect directly with our team</li>
+                    <li>Choose how we contact you</li>
+                </ul>
+            </div>
+            <div class="form-card">
+                <form id="family-form">
+                    <div class="form-heading">
+                        <h2>Your registration</h2>
+                        <p>All fields are required. Your WhatsApp message will be prepared for you to review and send.</p>
+                    </div>
+                    <div class="field-grid">
+                        <div class="field field-full">
+                            <label for="client-name">Full name <span aria-hidden="true">*</span></label>
+                            <input id="client-name" name="name" type="text" autocomplete="name" placeholder="Your full name" maxlength="100" required>
+                        </div>
+                        <div class="field field-full">
+                            <label for="client-address">Address <span aria-hidden="true">*</span></label>
+                            <input id="client-address" name="address" type="text" autocomplete="street-address" placeholder="Your residential or postal address" maxlength="200" required>
+                        </div>
+                        <div class="field">
+                            <label for="client-email">Email address <span aria-hidden="true">*</span></label>
+                            <input id="client-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" maxlength="254" required>
+                        </div>
+                        <div class="field">
+                            <label for="client-phone">10-digit contact number <span aria-hidden="true">*</span></label>
+                            <input id="client-phone" name="phone" type="tel" inputmode="numeric" autocomplete="tel-national" placeholder="e.g. 0977123456" minlength="10" maxlength="10" pattern="[0-9]{10}" aria-describedby="phone-hint" required>
+                            <span class="field-hint" id="phone-hint">Enter 10 digits, without the country code.</span>
+                        </div>
+                    </div>
+                    <div class="consent-row">
+                        <input id="contact-consent" name="consent" type="checkbox" required>
+                        <label for="contact-consent">I agree that GioEquinox may use these details to contact me about its products, updates, and my membership. <span aria-hidden="true">*</span></label>
+                    </div>
+                    <p class="privacy-note">Your details are included in a WhatsApp message addressed to GioEquinox. Review it before tapping Send. This website does not store your registration.</p>
+                    <p class="form-error" id="form-error" role="alert" hidden></p>
+                    <button class="submit-button" id="submit-button" type="submit">Join the Equinox Family <span aria-hidden="true">↗</span></button>
+                </form>
+                <section class="confirmation" id="confirmation" aria-labelledby="confirmation-title" aria-live="polite" hidden>
+                    <svg class="confirmation-logo" viewBox="0 0 120 120" role="img" aria-label="An animated lunar eclipse">
+                        <defs>
+                            <linearGradient id="family-sun" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f8d68e"/><stop offset="1" stop-color="#d9864d"/></linearGradient>
+                            <radialGradient id="family-moon" cx="34%" cy="27%" r="80%"><stop offset="0" stop-color="#51434f"/><stop offset=".65" stop-color="#29252d"/><stop offset="1" stop-color="#17161b"/></radialGradient>
+                        </defs>
+                        <circle class="sun" cx="60" cy="66" r="43" fill="url(#family-sun)"/>
+                        <circle class="moon" cx="60" cy="52" r="42" fill="url(#family-moon)"/>
+                        <path d="M25 47c8-25 30-39 54-32-10 3-15 11-21 14-9 4-13-3-21 5-5 5-5 11-12 13Z" fill="#746772" opacity=".55"/>
+                        <ellipse cx="44" cy="42" rx="6" ry="4" fill="#17161b" opacity=".66" transform="rotate(-24 44 42)"/>
+                        <ellipse cx="78" cy="57" rx="7" ry="5" fill="#17161b" opacity=".58" transform="rotate(-14 78 57)"/>
+                        <circle cx="44" cy="42" r="1.5" fill="#a28ca0"/>
+                        <circle cx="78" cy="57" r="1.5" fill="#9b8499"/>
+                    </svg>
+                    <h2 id="confirmation-title">Welcome to the family.</h2>
+                    <p>Your registration details are ready in WhatsApp. Review the message, then tap <strong>Send</strong> there to complete your registration.</p>
+                    <p class="confirmation-step" id="confirmation-name"></p>
+                    <a class="whatsapp-fallback" id="whatsapp-fallback" href="#" target="_blank" rel="noopener noreferrer">Continue to WhatsApp</a>
+                    <a class="edit-link" href="#" id="edit-registration">Edit my details</a>
+                </section>
+            </div>
+        </section>
+    </main>
+    <footer class="footer">
+        <div class="footer-inner shell">
+            <a class="brand" href="equinox.html"><span class="brand-name">Gio<span>Equinox</span></span></a>
+            <span>© <span id="current-year"></span> GioEquinox · Munali Mall, Shop 32</span>
+            <a href="https://wa.me/260777907071" target="_blank" rel="noopener noreferrer">WhatsApp us ↗</a>
+        </div>
+    </footer>
+    <script>
+        (() => {
+            const form = document.getElementById('family-form');
+            const phone = document.getElementById('client-phone');
+            const confirmation = document.getElementById('confirmation');
+            const fallbackLink = document.getElementById('whatsapp-fallback');
+            const errorMessage = document.getElementById('form-error');
+
+            phone.addEventListener('input', () => {
+                phone.value = phone.value.replace(/\D/g, '').slice(0, 10);
+            });
+
+            form.addEventListener('submit', event => {
+                event.preventDefault();
+                errorMessage.hidden = true;
+                if (!form.reportValidity()) return;
+
+                const formData = new FormData(form);
+                const name = String(formData.get('name')).trim();
+                const address = String(formData.get('address')).trim();
+                const email = String(formData.get('email')).trim();
+                const phoneNumber = String(formData.get('phone'));
+                if (!name || !address || !/^[0-9]{10}$/.test(phoneNumber) || !formData.get('consent')) {
+                    errorMessage.textContent = 'Please complete each field and agree to be contacted before continuing.';
+                    errorMessage.hidden = false;
+                    return;
+                }
+
+                const message = [
+                    'Hello GioEquinox, I would like to join the Equinox Family.',
+                    '',
+                    `Name: ${name}`,
+                    `Address: ${address}`,
+                    `Email: ${email}`,
+                    `Contact number: ${phoneNumber}`,
+                    'Contact consent: Yes'
+                ].join('\n');
+                const whatsappUrl = `https://wa.me/260777907071?text=${encodeURIComponent(message)}`;
+                fallbackLink.href = whatsappUrl;
+                document.getElementById('confirmation-name').textContent = `Thank you, ${name}.`;
+
+                window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+                form.hidden = true;
+                confirmation.hidden = false;
+                confirmation.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            });
+
+            document.getElementById('edit-registration').addEventListener('click', event => {
+                event.preventDefault();
+                confirmation.hidden = true;
+                form.hidden = false;
+                form.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                form.querySelector('input[name="name"]').focus();
+            });
+
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+        })();
+    </script>
+</body>
+</html>

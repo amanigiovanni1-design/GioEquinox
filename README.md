@@ -4,7 +4,11 @@ A responsive perfume and watch catalogue storefront for GioEquinox.
 
 ## Run locally
 
-Open `equinox.html` or `watches.html` in a browser. The pages are self-contained and do not require a build step.
+Open `index.html` to enter the perfume collection, or browse `equinox.html`, `watches.html`, and `equinox-family.html` directly. The pages are self-contained and do not require a build step.
+
+## Live site
+
+The site is published with GitHub Pages from the `main` branch root.
 
 ## Current features
 
@@ -13,4 +17,5 @@ Open `equinox.html` or `watches.html` in a browser. The pages are self-contained
 - Per-product like/dislike controls saved in the current browser
 - Persistent shopping carts with quantity controls and WhatsApp order enquiries
 - Separate watch collection page with its own design, filters, reactions, and cart
+- Equinox Family registration page with consent, phone validation, and WhatsApp handoff
 - Store address, phone, and email links
