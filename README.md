@@ -18,10 +18,15 @@ The site is published with GitHub Pages from the `main` branch root.
 - One persistent cart shared by the perfume and watch catalogues, with quantity controls and combined WhatsApp enquiries
 - Separate watch collection page with its own design, filters, and reactions
 - Product photos and ZMW price references linked to the retailer listings used for comparison
+- No-billing, browser-only product recommendation demos on the perfume and watch pages
 - Equinox Family registration page with consent, phone validation, and WhatsApp handoff
 - Store address, phone, and email links
 
 The shared cart is saved in the visitor's browser and is not an online database. Existing perfume and watch cart selections are migrated into it when the catalogues are next opened in that browser.
+
+## Catalogue recommendation demo
+
+The perfume and watch catalogues have a small product-matching demo that ranks the published catalogue using typed keywords and an optional K budget. A visitor can open a match or add it to the shared cart. It runs locally in the browser, makes no API requests, uses no provider key, and does not send visitors' messages or other data anywhere. It is a rule-based demo, not a generative AI model.
 
 ## Product photos and price references
 

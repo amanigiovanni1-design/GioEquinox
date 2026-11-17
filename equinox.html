@@ -289,6 +289,31 @@
         .product-notes { min-height: 38px; margin: 0; color: var(--muted); font-size: 12px; line-height: 1.6; }
         .catalog-price-note { margin: 0 0 22px; padding: 13px 16px; border-left: 2px solid #b2946b; background: #f3eee8; color: var(--muted); font-size: 11px; line-height: 1.65; }
         .catalog-price-note a { color: var(--plum); }
+        .demo-assistant { margin: 0 0 24px; padding: clamp(18px, 3vw, 28px); border: 1px solid #dfd3c7; border-radius: 8px; background: linear-gradient(120deg, #fffdfa, #f1e9e1); }
+        .demo-assistant-heading { display: flex; align-items: start; justify-content: space-between; gap: 16px; }
+        .demo-assistant h3 { margin: 0; font-family: var(--serif); font-size: clamp(23px, 3vw, 30px); font-weight: 400; }
+        .demo-assistant-copy, .demo-assistant-disclaimer { margin: 8px 0 0; color: var(--muted); font-size: 11px; line-height: 1.65; }
+        .demo-assistant-badge { flex: none; padding: 6px 9px; border: 1px solid #d5c4af; border-radius: 999px; color: #70543b; font-size: 8px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+        .demo-assistant-form { display: flex; gap: 9px; margin-top: 16px; }
+        .demo-assistant-input { min-width: 0; min-height: 44px; flex: 1; padding: 0 13px; border: 1px solid #d9cec4; border-radius: 999px; background: white; color: var(--ink); font: inherit; font-size: 12px; }
+        .demo-assistant-submit { min-height: 44px; padding: 0 17px; border: 0; border-radius: 999px; background: var(--plum); color: white; font-size: 11px; font-weight: 700; cursor: pointer; }
+        .demo-assistant-submit:hover { background: var(--plum-dark); }
+        .demo-assistant-prompts { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 11px; }
+        .demo-assistant-prompt { padding: 7px 10px; border: 1px solid #ded3c9; border-radius: 999px; background: transparent; color: #5e4d59; font-size: 9px; cursor: pointer; }
+        .demo-assistant-prompt:hover { border-color: var(--plum); background: #f4edf2; }
+        .demo-assistant-results { display: grid; gap: 8px; margin-top: 16px; }
+        .demo-assistant-results:empty { display: none; }
+        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+        .demo-assistant-empty { margin: 0; color: var(--muted); font-size: 11px; line-height: 1.65; }
+        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+        .demo-assistant-empty { margin: 0; color: var(--muted); font-size: 11px; line-height: 1.65; }
+        .demo-assistant-result { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 11px 13px; border: 1px solid #e8dfd7; border-radius: 6px; background: rgb(255 253 250 / 75%); }
+        .demo-assistant-result h4 { margin: 0; font-family: var(--serif); font-size: 17px; font-weight: 400; }
+        .demo-assistant-result p { margin: 4px 0 0; color: var(--muted); font-size: 10px; line-height: 1.5; }
+        .demo-assistant-result-actions { display: flex; flex: none; align-items: center; gap: 10px; }
+        .demo-assistant-result-actions a, .demo-assistant-add { color: var(--plum); font-size: 10px; font-weight: 700; }
+        .demo-assistant-add { padding: 7px 10px; border: 1px solid #d5c4d1; border-radius: 999px; background: transparent; cursor: pointer; }
+        .demo-assistant-add:hover { background: #f4edf2; }
         .product-price { margin: 14px 0 2px; color: var(--plum); font-size: 19px; font-weight: 700; }
         .product-price span { margin-left: 5px; color: var(--muted); font-size: 9px; font-weight: 400; }
         .price-source { display: inline-block; margin-bottom: 3px; color: #766875; font-size: 9px; text-decoration: underline; }
@@ -477,6 +502,11 @@
             .product-notes { min-height: 54px; font-size: 11px; }
             .product-price { margin-top: 10px; font-size: 17px; }
             .price-source { font-size: 8px; }
+            .demo-assistant-heading { flex-direction: column; }
+            .demo-assistant-form { align-items: stretch; flex-direction: column; }
+            .demo-assistant-submit { min-height: 42px; }
+            .demo-assistant-result { align-items: start; flex-direction: column; }
+            .demo-assistant-result-actions { width: 100%; justify-content: space-between; }
             .product-bottom { align-items: stretch; flex-direction: column; gap: 11px; }
             .product-order-actions { justify-content: space-between; gap: 6px; }
             .add-to-cart { min-height: 33px; padding-inline: 10px; font-size: 9px; }
@@ -603,6 +633,27 @@
                 <p class="reaction-summary" id="reaction-summary" aria-live="polite">Your likes: <strong>0</strong> · Dislikes: <strong>0</strong></p>
             </div>
             <p class="catalog-price-note">Retailer reference prices checked 17 Nov 2026 and converted at US$1 = K20.580374 (about K20.58). These are not confirmed GioEquinox prices; shipping, taxes and import duties are excluded. Please confirm local price, availability and product details with us before ordering. <a href="https://www.exchangerate-api.com/" target="_blank" rel="noopener noreferrer">Rate source ↗</a></p>
+            <section class="demo-assistant" aria-labelledby="fragrance-assistant-title">
+                <div class="demo-assistant-heading">
+                    <div>
+                        <h3 id="fragrance-assistant-title">Need a scent suggestion?</h3>
+                        <p class="demo-assistant-copy">Describe a scent family, note, or budget and get a few catalogue matches.</p>
+                    </div>
+                    <span class="demo-assistant-badge">Catalogue demo</span>
+                </div>
+                <form class="demo-assistant-form" id="demo-assistant-form">
+                    <label class="sr-only" for="demo-assistant-input">Describe the perfume you are looking for</label>
+                    <input class="demo-assistant-input" id="demo-assistant-input" name="preferences" type="text" maxlength="160" placeholder="e.g. fresh and citrus, under K1,200" autocomplete="off" required>
+                    <button class="demo-assistant-submit" type="submit">Find my match</button>
+                </form>
+                <div class="demo-assistant-prompts" aria-label="Try a suggestion">
+                    <button class="demo-assistant-prompt" type="button" data-assistant-prompt="Floral and soft">Floral &amp; soft</button>
+                    <button class="demo-assistant-prompt" type="button" data-assistant-prompt="Fresh under K1,200">Fresh under K1,200</button>
+                    <button class="demo-assistant-prompt" type="button" data-assistant-prompt="Woody and warm">Woody &amp; warm</button>
+                </div>
+                <p class="demo-assistant-disclaimer">Demo only: recommendations use simple keyword and catalogue matching in your browser. This is not a generative AI service; no API, account, billing, or personal-data sharing is involved.</p>
+                <div class="demo-assistant-results" id="demo-assistant-results" role="status" aria-live="polite" aria-relevant="additions"></div>
+            </section>
             <div class="product-grid" id="product-grid">
                 <article class="product-card" data-category="floral amber" data-product="Chanel No. 5" data-price="3684" data-usd-price="179">
                     <div class="product-art" style="--art-bg:linear-gradient(145deg,#d9ba94,#987564);--bottle:#805341">
@@ -1093,5 +1144,6 @@
             renderCart();
         })();
     </script>
+    <script src="assets/demo-assistant.js" defer></script>
 </body>
 </html>
